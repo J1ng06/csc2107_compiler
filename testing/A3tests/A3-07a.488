@@ -1,0 +1,16 @@
+% A3-07a.488
+% test statement checks
+  {  
+    var p, q  : boolean
+    var i , j : integer
+    while true do   {  
+         procedure P( i : integer )   {  
+          exit
+         }  
+       P( 17 )
+       { var K : integer
+        { { exit when K < 7 }}
+       }
+      }  
+    exit when p
+  }  

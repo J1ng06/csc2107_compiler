@@ -1,0 +1,16 @@
+{   %comparator NOT EQUAL (variable)
+
+    var num : integer
+    var num2 : integer
+    
+    num := 5
+    num2 := 6
+    
+    if num2 not = num
+    then write "passed", newline
+    else write "failed", newline
+    
+    if num not = num2 - 1
+    then write "failed", newline
+    else write "passed", newline
+}

@@ -1,0 +1,15 @@
+{   % if statement with else statement
+    var num : integer
+    var num2 : integer
+    
+    num := 6
+    num2 := 99
+    
+    if true
+    then write num, newline
+    else write num2, newline
+    
+    if false
+    then write num, newline
+    else write num2, newline
+}

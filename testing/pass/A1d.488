@@ -1,0 +1,55 @@
+% A1d.488 - Authored by all members:
+%
+%         Name      |   CDF
+%    -------------------------
+%    Qi Jian Huang  | c6huangu
+%    Jingnan Chen   | c6chenjl
+%    Faith Magcalas | g3hummus
+%    Steven Low     | g3lowste
+
+{
+    % function without parameter
+    function func1 : integer {
+        var num : integer
+        num := 10
+        return with num
+    }
+
+    % function with parameter
+    function func2(bool1 : boolean, int1 : integer) : boolean {
+        var bool : boolean
+        bool := false
+        if (int1 = 1)
+        then
+            bool := bool1
+        return with bool
+    }
+
+    % procedure without parameter
+    procedure proce1 {
+        write "string output"
+        return
+    }
+
+    % procedure with parameter
+    procedure proce2(bool : boolean) {
+        var bool1 : boolean
+        bool1 := bool
+        return
+    }
+
+    % declarations
+    var bool : boolean
+    var int1 : integer
+
+    % statements
+    bool := true
+    int1 := 1   
+
+    % statements: calling functions and procedures
+    if (func1 = 10)
+    then proce1
+
+    if func2(bool, int1)
+    then proce2(bool)
+}

@@ -1,0 +1,151 @@
+% A1e.488 - Authored by all members:
+%
+%         Name      |   CDF
+%    -------------------------
+%    Qi Jian Huang  | c6huangu
+%    Jingnan Chen   | c6chenjl
+%    Faith Magcalas | g3hummus
+%    Steven Low     | g3lowste
+{
+    var global_func_value : integer
+    var global_proce_value : integer
+ 
+    % recursive factorial function without parameter   
+    function fact : integer {
+        % nested function
+        function func_disp : boolean { 
+            write "nested function"
+            return with true
+        }
+
+        % nested procedure
+        procedure proce_disp { 
+            write "nested procedure"
+            return
+        }
+
+        var temp_value : integer
+        
+        if func_disp then {
+            proce_disp
+        }
+
+        % factorial implementation
+
+        if (global_func_value = 1)
+        then {
+            return with global_func_value
+        }
+        else {
+            global_func_value := global_func_value - 1 
+            temp_value := global_func_value + 1
+            return with temp_value * fact
+        }
+    }
+
+    % recursive factorial function with parameter
+    function fact(num : integer) : integer {
+        % nested function
+        function func_disp : boolean { 
+            write "nested function"
+            return with true
+        }
+
+        % nested procedure
+        procedure proce_disp { 
+            write "nested procedure"
+            return
+        }
+        
+        if func_disp then {
+            proce_disp
+        }
+
+        % factorial implementation
+        if (num = 1) 
+        then {
+            return with num
+        }
+        else {
+            return with num * fact(num - 1)
+        }
+    }
+    
+    % recursive procedure without parameter
+    procedure decrease {
+        % nested function
+        function func_disp : boolean { 
+            write "nested function"
+            return with true
+        }
+
+        % nested procedure
+        procedure proce_disp { 
+            write "nested procedure"
+            return
+        }
+     
+        if func_disp
+        then {
+            proce_disp
+        }
+
+        % decrease number implementation
+        global_proce_value := global_proce_value - 1
+        if (global_proce_value < 0)
+        then {
+            return
+        }
+        else {
+            decrease
+            return
+        }
+
+    }
+    
+    % recursive procesure with parameter
+    procedure decrease(num : integer) {
+        % nested function
+        function func_disp : boolean { 
+          write "nested function"
+          return with true
+        }
+
+        % nested procedure
+        procedure proce_disp { 
+            write "nested procedure"
+            return
+        }
+        
+        if func_disp
+        then {
+            proce_disp
+        }
+
+        % decrease number implementation
+        num := num - 1
+        if (num < 0)
+        then {
+            return
+        }
+        else {
+            decrease(num - 1)
+            return
+        }
+    }
+    
+    % statements
+    global_func_value := 5
+    global_proce_value := 5
+    
+    % statements: calling functions and procedures
+    if (fact(5) > 20)
+    then {
+        decrease(5)
+    }
+    
+    if (fact > 20)
+    then {
+        decrease
+    }
+}

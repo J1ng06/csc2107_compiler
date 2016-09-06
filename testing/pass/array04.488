@@ -1,0 +1,9 @@
+{   % one D array with variable
+    var array[-300..5000] : integer
+    var num : integer
+    
+    num := -200
+    array[num] := 800
+    
+    write array[num], newline
+}

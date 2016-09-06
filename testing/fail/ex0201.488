@@ -1,0 +1,5 @@
+% ex0201: negative boolean
+{ 
+	var num : integer
+	num := -true
+}

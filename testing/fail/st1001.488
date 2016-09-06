@@ -1,0 +1,6 @@
+% st1001: return with expression without loop
+{
+  var num : integer
+  
+  return with true
+}

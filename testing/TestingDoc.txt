@@ -1,0 +1,27 @@
+How to run the tests:
+    execute the following commands in order:
+        ant gettools
+        ant dist
+        ant runtests
+    the test output will then be written to testOutput.txt in the project root.
+
+
+For this phase of the assignment we decided to test using a testing framework
+rather than with the shell scripts used for the previous assignments. The
+main advantage of this, is that it guards against regressions when fixing bugs
+(we initially found fixing bugs would re-introduce problems.) The method used
+was for each test was as follows:
+    1. Construct a machine with its output redirected to a temporary file.
+    2. Compile the source program being tested.
+    3. Execute the machine.
+    4. Use FileUtils.readFileToString to put the machine output in a string.
+    5. Compare with the expected String output.
+
+Some modifications were made to build.xml in order to achieve the above:
+    gettools - now also gets apache commons-io.jar, hamcrest-core-1.3.jar,
+        and junit-4.12.jar.
+    compile - now also includes junit-4.12.jar and commons-io-2.4.jar
+    runtests - a new target that runs the JUnit tests and writes the output
+        to testOutput.txt in the root.
+
+For an index of the tests performed, see README.tests

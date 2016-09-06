@@ -1,0 +1,12 @@
+   Test    Errors   Errs Crash 
+A3-05a.488     0      -8       // 0 error caught for duplicate declarations in minor scopes 
+A3-07a.488     2       2       // 2 errors caught, but one of them are not correct,
+							   // cuz one of them should be S50
+A3-07b.488     5       6	   // 6 errors caught, second and fourth error shouldn't be an error, 
+							   // cuz local variables can have same name with global variable should be okay, right?
+							   // error from line 5 should be caught ('return' used in function)
+A3-07c.488     5       5   	   // good now
+A3-08e.488     6       1       // 8 errors caught; first and second error shouldn't be caught
+A3-09.488      8       11      // 11 errors caught; need discussion; can we read/write booleans?
+A3-10.488      8       7       // first, second and third error shouldnt be caught;
+							   // errors in line 18 not been caught: parameter type mismatches

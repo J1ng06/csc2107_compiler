@@ -1,0 +1,6 @@
+{   % not expression with boolean constant
+
+    if (not true)
+    then write 5, newline
+    else write 10, newline
+}

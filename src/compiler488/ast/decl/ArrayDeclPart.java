@@ -1,103 +1,107 @@
 package compiler488.ast.decl;
 
 import compiler488.ast.PrettyPrinter;
+import compiler488.visitor.IVisitor;
 
 /**
  * Holds the declaration part of an array.
  */
 public class ArrayDeclPart extends DeclarationPart {
-	/** The lower bound of dimension 1. */
-	private Integer lb1;
+    /**
+     * The lower bound of dimension 1.
+     */
+    private ArrayBoundPart bound1;
 
-	/** The upper bound of dimension 1. */
-	private Integer ub1;
+    /**
+     * The lower bound of dimension 2 (if any.)
+     */
+    private ArrayBoundPart bound2 = null;
 
-	/** The lower bound of dimension 2 (if any.) */
-	private Integer lb2 = null;
+    /**
+     * True iff this is an 2D array
+     */
+    private Boolean isTwoDimensional = false;
 
-	/** The upper bound of dimension 2 (if any.) */
-	private Integer ub2 = null;
+    public ArrayDeclPart(String name, ArrayBoundPart bound1, int line, int column) {
+        super(name, line, column);
 
-	/** True iff this is an 2D array */
-	private Boolean isTwoDimensional = false;
+        this.bound1 = bound1;
 
-	public ArrayDeclPart(String name, Integer lb1, Integer ub1) {
-		super(name);
+        this.isTwoDimensional = false;
+        this.bound2 = null;
+        this.isArray = true;
+    }
 
-		this.lb1 = lb1;
-		this.ub1 = ub1;
+    public ArrayDeclPart(String name, ArrayBoundPart bound1, ArrayBoundPart bound2, int line, int column) {
+        this(name, bound1, line, column);
 
-		this.isTwoDimensional = false;
-		this.lb2 = null;
-		this.ub2 = null;
-	}
+        this.isTwoDimensional = true;
+        this.bound2 = bound2;
+    }
 
-	public ArrayDeclPart(String name, Integer lb1, Integer ub1, Integer lb2, Integer ub2) {
-		this(name, lb1, ub1);
+    /**
+     public ArrayDeclPart(String name, Integer[] dim1, int line, int column) {
+     this(name, dim1[0], dim1[1], line, column);
+     }
 
-		this.isTwoDimensional = true;
-		this.lb2 = lb2;
-		this.ub2 = ub2;
-	}
+     public ArrayDeclPart(String name, Integer[] dim1, Integer[] dim2) {
+     this(name, dim1[0], dim1[1], dim2[0], dim2[1]);
+     }
+     */
 
-	public ArrayDeclPart(String name, Integer[] dim1) {
-		this(name, dim1[0], dim1[1]);
-	}
+    /**
+     * Returns a string that describes the array.
+     */
+    @Override
+    public String toString() {
+        return name + "[" + bound1.getLb() + ".." + bound1.getUb() + (isTwoDimensional ? ", " + bound2.getLb() + ".." + bound2.getUb() : "") + "]";
+    }
 
-	public ArrayDeclPart(String name, Integer[] dim1, Integer[] dim2) {
-		this(name, dim1[0], dim1[1], dim2[0], dim2[1]);
-	}
+    /**
+     * Calculates the number of values held in an array declared in this way.
+     * <p/>
+     * TODO: Add a correct computation of the size of this array.
+     *
+     * @return size of the array
+     */
+    public int getBound1Size() {
+        return Math.abs(bound1.getUb() - bound1.getLb()) + 1; 
+    }
+    
+    public int getBound2Size() {
+        if (this.isTwoDimensional) {
+            return Math.abs(bound2.getUb() - bound2.getLb()) + 1;
+        } 
+        else {
+            throw new UnsupportedOperationException();
+        }
+    }
 
-	/**
-	 * Returns a string that describes the array.
-	 */
-	@Override
-	public String toString() {
-		return name + "[" + lb1 + ".." + ub1 + (isTwoDimensional ? ", " + lb2 + ".." + ub2 : "") + "]";
-	}
+    public Boolean isTwoDim() {
+        return this.isTwoDimensional;
+    }
 
-	/**
-	 * Calculates the number of values held in an array declared in this way.
-	 *
-	 * TODO: Add a correct computation of the size of this array.
-	 *
-	 * @return size of the array
-	 */
-	public int getSize() {
-		// FIXME: This is broken.
-		throw new UnsupportedOperationException();
-	}
+    public ArrayBoundPart getBound1() {
+        return this.bound1;
+    }
 
-	public Integer getLowerBoundary1() {
-		return lb1;
-	}
+    public ArrayBoundPart getBound2() {
+        return this.bound2;
+    }
 
-	public Integer getUpperBoundary1() {
-		return ub1;
-	}
+    @Override
+    public void prettyPrint(PrettyPrinter p) {
+        p.print(name + "[" + bound1.getLb() + ".." + bound1.getUb());
 
-	public Integer getLowerBoundary2() {
-		// Confirm correct use
-		assert isTwoDimensional;
+        if (isTwoDimensional) {
+            p.print(", " + bound2.getLb() + ".." + bound2.getUb());
+        }
 
-		return lb2;
-	}
+        p.print("]");
+    }
 
-	public Integer getUpperBoundary2() {
-		// Confirm correct use
-		assert isTwoDimensional;
-
-		return ub2;
-	}
-
-	@Override
-	public void prettyPrint(PrettyPrinter p) {
-		p.print(name + "[" + lb1 + ".." + ub1);
-
-		if (isTwoDimensional) {
-			p.print(", " + lb2 + ".." + ub2);
-		}
-
-		p.print("]");
-	}
+    @Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
 }

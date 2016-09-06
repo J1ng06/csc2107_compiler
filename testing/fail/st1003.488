@@ -1,0 +1,18 @@
+% st1003: nested functions with only one 'return with' (inside inner function)
+{
+	var num : integer
+    
+    function fact : integer {
+    
+    	function fact2 : integer {
+    	if true
+    	then
+  			return with 2 
+  		}
+  		   
+  		write "apple pie"	
+  		
+  	}  
+  	
+  	num := 2
+}	

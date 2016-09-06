@@ -1,0 +1,5 @@
+{   % boolean or short circuit
+    if true or (1 = 1/0)        % division by 0
+    then write "passed", newline
+    else write "failed", newline
+}

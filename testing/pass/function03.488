@@ -1,0 +1,13 @@
+{   % function with two parameters
+    
+    function func(num : integer, bool : boolean) : integer
+    {
+        if bool
+        then return with num
+        else return with num + 2
+    }
+    
+    if func(8888, true) = 8888
+    then write "PASSEP", newline
+    else write "FAILEF", newline
+}

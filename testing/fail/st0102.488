@@ -1,0 +1,5 @@
+% st0102: use non-declared variable
+{
+  var num2 : integer
+  num := true
+}

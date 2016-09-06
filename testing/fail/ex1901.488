@@ -1,0 +1,8 @@
+% ex1901: make first expression not boolean
+{ 
+	var num : integer
+	
+	if ((3 + 2) ? true : false)
+	then
+		exit
+}

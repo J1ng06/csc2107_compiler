@@ -4,6 +4,7 @@
     <!-- src, build, lib and dist directories -->
     <property name="src" location="src" />
     <property name="build" location="bin" />
+    <property name="test" location="bin.test" />
     <property name="lib" location="lib" />
     <property name="dist" location="dist" />
     <property name="basedir" location="bin" />
@@ -15,12 +16,18 @@
     <property name="jflex.jar" value="${lib}/JFlex.jar" />
     <property name="cup.jar" value="${lib}/java-cup-v11a.jar" />
     <property name="runtime.jar" value="${lib}/java-cup-11a-runtime.jar" />
+    <property name="junit.jar" value="${lib}/junit-4.12.jar" />
+    <property name="commons-io.jar" value="${lib}/commons-io-2.4.jar" />
+    <property name="hamcrest.jar" value="${lib}/hamcrest-core-1.3.jar" />
 
     <!-- where to get jar files from -->
     <!-- Locations for cdf.toronto.edu -->
     <property name="jflex.jar.url" value="http://www.cdf.toronto.edu/~csc488h/winter/lib/JFlex.jar" />
     <property name="cup.jar.url" value="http://www.cdf.toronto.edu/~csc488h/winter/lib/java-cup-v11a.jar" />
     <property name="runtime.jar.url" value="http://www.cdf.toronto.edu/~csc488h/winter/lib/java-cup-11a-runtime.jar" />
+    <property name="junit.jar.url" value="http://www.cdf.toronto.edu/~g3lowste/junit-4.12.jar" />
+    <property name="commons-io.jar.url" value="http://www.cdf.toronto.edu/~g3lowste/commons-io-2.4.jar" />
+    <property name="hamcrest.jar.url" value="http://www.cdf.toronto.edu/~g3lowste/hamcrest-core-1.3.jar" />
 
     <path id="running.classpath">
         <pathelement location="${build}" />
@@ -73,6 +80,9 @@
         <get src="${jflex.jar.url}" dest="${jflex.jar}" />
         <get src="${cup.jar.url}" dest="${cup.jar}" />
         <get src="${runtime.jar.url}" dest="${runtime.jar}" />
+        <get src="${junit.jar.url}" dest="${junit.jar}" />
+        <get src="${commons-io.jar.url}" dest="${commons-io.jar}" />
+        <get src="${hamcrest.jar.url}" dest="${hamcrest.jar}" />
     </target>
 
 
@@ -118,10 +128,12 @@
         <!-- workaround for bug in ant 1.8 -->
         <javac debug="${debug_build}"
             includeantruntime="false"
-            srcdir="${src}" destdir="${build}">
+            srcdir="${src}" destdir="${build}" >
             <classpath>
                 <fileset dir="${lib}">
                     <include name="java-cup-11a-runtime.jar" />
+                    <include name="junit-4.12.jar" />
+                    <include name="commons-io-2.4.jar" />
                 </fileset>
             </classpath>
         </javac>
@@ -141,6 +153,22 @@
                     />
             </manifest>
         </jar>
+    </target>
+
+    <target name="runtests">
+        <junit haltonfailure="yes">
+            <classpath>
+                <pathelement location="bin" />
+                <pathelement location="lib/junit-4.12.jar" />
+                <pathelement location="lib/hamcrest-core-1.3.jar" />
+                <pathelement location="lib/java-cup-11a-runtime.jar" />
+                <pathelement location="lib/commons-io-2.4.jar" />
+            </classpath>
+            <test name="test.CodeGenTest" outfile="testOutput"
+                  haltonfailure="no">
+                <formatter type="plain" />
+            </test>
+        </junit>
     </target>
 
     <target name="submit" depends="compile"

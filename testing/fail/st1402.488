@@ -1,0 +1,11 @@
+% st1401: use procedurename but declared procedurename(parameter)
+{ 
+  	% recursive procesure with parameter
+    procedure decrease {
+    	write "apple pie"
+	}
+	
+	if true
+	then
+		decrease(2)
+}

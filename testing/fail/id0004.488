@@ -1,0 +1,11 @@
+% id0004: use un-declared ident in procedure
+{ 
+	var num : boolean
+	
+	procedure apple {
+		num2 := true
+		return
+	}
+	
+	num := true
+}

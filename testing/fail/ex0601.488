@@ -1,0 +1,8 @@
+% ex0601: boolean division
+{ 
+	var bool : boolean
+	var bool2 : boolean
+	var result : integer
+	
+	result := bool / (bool2 / true)
+}

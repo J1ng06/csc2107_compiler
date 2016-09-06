@@ -1,0 +1,12 @@
+{   % function without parameters
+    
+    function func : integer
+    {
+        
+        return with 8888
+    }
+    
+    if func = 8888
+    then write "PASSEP", newline
+    else write "FAILEF", newline
+}

@@ -1,0 +1,19 @@
+{   % repeat until exit
+    
+    var num : integer
+    
+    num := 10
+    
+    repeat
+    {
+        num := num * num
+
+        repeat
+        {
+            exit 2
+        } until num = 100000
+        
+    } until num = 10000
+    
+    write "Expected 100 ", "But got ", num, newline 
+}

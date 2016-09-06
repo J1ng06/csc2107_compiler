@@ -1,0 +1,40 @@
+Java class index:
+    src/compiler488/codegen/CodeGen.java
+        The code generation visitor.
+    src/test/CodeGenTest.java
+        The code generation JUnit tests.
+
+Similarly to A3, we decided to employ the visitor pattern again to visit
+each node of the program AST for code generation. CodeGen implements IVisitor
+interface which contains the methods for visiting different types of AST nodes.
+
+Some helper methods were also added in the CodeGen class, they are as follows:
+    writeInstruction(Short instruction, [Short arg1, Short arg2]):
+        Write an instruction to the machine. This method is overloaded to
+        permit writing instructions with 0, 1, or 2 arguments.
+    writeToAddr(Short address, Short data):
+        write 'data' to machine address 'address'.
+    readFromMemAddr(Short addr):
+        read from 'addr' and return the value, or Machine.UNDEFINED if
+        undefined.
+
+The remainder of the visit methods operate as follows:
+
+visit(Program program): Turns on codeGen tracing if requested, prepares
+    for execution by PUSHMT, and sets the display to lexical level 0. Scope is
+    then visited, followed by writing the HALT instructon. Finally, PC, MSP,
+    and MLP are set.
+
+visit(Scope scope): Visit both the declaration list and the statement list. No
+    machine instructions need to be written here.
+
+visit(UnaryMinusExpn unaryMinusExpn): If the operand is an identifier, visit
+    the identifier, then LOAD it and write NEG to the machine. Otherwise, visit
+    the operand and write NEG to the machine.
+
+visit(TextConstExpn textConstExpn): PUSH and PRINTC each character in
+    textConstExpn.
+
+visit(SubsExpn subsExpn): For a two dimensional array, emit code to evaluate
+    both subscript expressions, find the row and column offets, calculate the
+    offset number then write ADDR LL ON to the machine.

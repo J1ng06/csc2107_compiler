@@ -1,0 +1,8 @@
+% st0801: non boolean type expression
+{
+  var num : integer
+  
+  if true
+  then
+  	exit when 1
+}

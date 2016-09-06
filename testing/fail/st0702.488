@@ -1,0 +1,10 @@
+% st0702: exit 1 inside a double loops
+{
+  var num : integer
+  
+  if true
+  then
+  	if true
+  	then
+  		exit 3
+}

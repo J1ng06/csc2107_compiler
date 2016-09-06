@@ -1,0 +1,16 @@
+% A3-01.488
+% test correct declarations and usage
+  {  
+   var i , j : integer
+   var p , q : boolean
+   var a1[ 20 ] , a2[ -100 .. -50 ], a3[ -20 .. 21 ] : integer
+   var p1[ 19 ] , p2[ -97 .. -47 ] , p3[ -19 .. 25 ] : boolean
+   var x1[ 15 , 20 ] , x2[ -5 .. 5 , 12 ] , x3[ -32767 .. -32760 , 14 .. 45 ] , x4[ 1 .. 3 , 32760  .. 32767 ] : integer
+   % try some really long identifiers
+   var Supercalifragilisticexpialidocious, Antidisestablishmentarianism : integer
+   var pneumonoultramicroscopicsilicovolcanoconiosis, Floccinaucinihilipilication : boolean
+   Supercalifragilisticexpialidocious : = 42
+   pneumonoultramicroscopicsilicovolcanoconiosis : = false
+   x1[i,j] : = a1[i] + x3[i,j]
+   p3[ x1[i,j]] : = p2[x2[i,j]]
+  }  

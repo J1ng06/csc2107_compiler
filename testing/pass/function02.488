@@ -1,0 +1,12 @@
+{   % function with one parameters
+    
+    function func(num : integer) : integer
+    {
+        
+        return with num
+    }
+    
+    if func(8888) = 8888
+    then write "PASSEP", newline
+    else write "FAILEF", newline
+}

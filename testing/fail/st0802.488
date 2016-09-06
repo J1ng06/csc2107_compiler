@@ -1,0 +1,6 @@
+% st0802: exit when expression without loop
+{
+  var num : integer
+  
+  exit when true
+}

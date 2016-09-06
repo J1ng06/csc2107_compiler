@@ -1,0 +1,28 @@
+{   % function with two parameters
+    
+    %var flag : boolean
+    
+    function test : integer
+    {
+        return with 20000
+    }
+    
+    function func(num : integer) : integer
+    {
+        return with 500
+    }
+    
+    function func2(num2 : integer, bool2 : boolean) : integer
+    {
+        return with 500
+    }
+    
+    %write test
+    %write func(400)
+    
+    if func(100) = 500
+    then if func2(100, false) = 500
+            then write "Passed", newline
+            else write "failed", newline
+    else write "failed", newline
+}

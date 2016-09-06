@@ -1,0 +1,33 @@
+{   % whileDo exit
+    
+    var bool : boolean
+    var num : integer
+    
+    num := 10
+    bool := true
+    
+    while bool
+    do 
+        {
+            num := num - 1
+        
+            while bool 
+            do
+            {
+                exit 2
+            }
+            
+            if num = 0
+            then bool := false
+         }
+        
+    
+    while bool
+    do {
+        num := num + 10
+        if num = 29
+        then exit
+       }
+    
+    write "Expected 29 ", "But got ", num, newline 
+}

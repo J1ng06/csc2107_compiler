@@ -1,0 +1,10 @@
+{   %comparator NOT EQUAL (constant)
+    
+    if 5 not= 5
+    then write "failed", newline
+    else write "passed", newline
+    
+    if 4 not= 3
+    then write "passed", newline
+    else write "failed", newline
+}

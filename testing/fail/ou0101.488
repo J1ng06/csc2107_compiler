@@ -1,0 +1,7 @@
+% ou0101: write output with boolean
+{
+  write true
+  write true
+  write false
+  write "some string"
+}

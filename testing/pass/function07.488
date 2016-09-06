@@ -1,0 +1,32 @@
+{   % function with two parameters
+    
+    var flag : boolean
+    
+    function func(num : integer, bool : boolean) : integer
+    {
+        var digit : integer
+        
+        function func2(count : integer, count2 : integer, count3 : integer) : integer
+        {
+            return with count
+        }
+        
+        if bool
+        then write "PASSED", newline
+        else write "FAILED", newline
+        
+        digit := num
+        
+        if func2(num, digit, 100) = 100
+        then write "PASSED", newline
+        else write "FAILED", newline
+        
+        return with 500
+    }
+    
+    flag := true
+    
+    if func(100, flag) = 500
+    then write "PASSED", newline
+    else write "FAILEF", newline
+}

@@ -1,5 +1,7 @@
 package compiler488.ast;
 
+import compiler488.visitor.IVisitable;
+
 /**
  * Common interface for all Abstract Syntax Tree nodes.
  *
@@ -15,5 +17,7 @@ package compiler488.ast;
  * @see compiler488.ast.BaseAST
  */
 public interface AST extends PrettyPrintable {
+	public int getLine();
+	public int getColumn();
 	public void prettyPrint(PrettyPrinter p);
 }

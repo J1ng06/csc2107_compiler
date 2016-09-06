@@ -1,0 +1,19 @@
+{   % function with two parameters
+    
+    function func : integer
+    {   
+        function getTrue : integer
+        {
+            return with 500
+        }
+        
+        write getTrue, newline
+        
+        return with 500
+    }
+    
+    write func, newline
+    %if func = 500
+    %then write "PASSEP", newline
+    %else write "FAILEF", newline
+}

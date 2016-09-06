@@ -2,6 +2,7 @@ package compiler488.ast.decl;
 
 import compiler488.ast.BaseAST;
 import compiler488.ast.type.Type;
+import compiler488.symbol.SymbolType;
 
 /**
  * The common features of declarations.
@@ -13,8 +14,8 @@ public abstract class Declaration extends BaseAST {
 	/** The type of thing being declared. */
 	protected Type type = null;
 
-	public Declaration(String name, Type type) {
-		super();
+	public Declaration(String name, Type type, int line, int column) {
+		super(line, column);
 
 		this.name = name;
 		this.type = type;
@@ -26,5 +27,9 @@ public abstract class Declaration extends BaseAST {
 
 	public Type getType() {
 		return type;
+	}
+	
+	public SymbolType getSymbolType() {
+	    return type.getType();
 	}
 }

@@ -1,0 +1,4 @@
+% st0602: exit when with a non-boolean expn
+{
+  exit when 1
+}

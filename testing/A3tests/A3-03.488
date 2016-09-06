@@ -1,0 +1,22 @@
+% A3-03.488
+% test detection of multiple declaration
+  {  
+    function F : boolean  { var i : integer var i : boolean i : = 3  return with false   }   
+    function G ( q : boolean  , j : integer) : integer  {   var q :integer var j : boolean j : = true  return with 7   }  
+     procedure P  {   var i,j,k,i  : integer var p,q, p[10] : boolean j : = 7    }  
+     procedure Q ( m : integer , s : boolean , n : integer )
+         {    var m[ -10 .. 10 ] : boolean var s , s  : integer var m, n : boolean  m : = false   }  
+   var i : integer
+   var F, G, P, Q  : integer
+   F
+   i : = G( false, 3 )
+   P
+   Q( 1, false, 2 )
+   {
+    procedure R( R : integer)  { 
+      var R : boolean
+      R := true
+    } 
+    R( 7 )
+   }
+  }  

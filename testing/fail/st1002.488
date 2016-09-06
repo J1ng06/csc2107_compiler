@@ -1,0 +1,10 @@
+% st1002: return types do not match
+{
+	var num : integer
+    
+    function fact : integer {
+  		return with true
+  	}  
+  	
+  	num := 2
+}	

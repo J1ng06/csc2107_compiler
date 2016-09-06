@@ -1,0 +1,6 @@
+{
+    var a[5] : integer
+    var num : integer
+
+    num := a
+}

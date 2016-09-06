@@ -1,0 +1,8 @@
+% va0202: array declared as integer, but use as boolean
+{ 
+	var array[3] : integer
+	var bool : boolean
+	
+	bool := true
+	array[2] := true 
+}

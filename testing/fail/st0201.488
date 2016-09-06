@@ -1,0 +1,7 @@
+%st0201: non boolean type expression for if loop
+{
+  var num : integer
+  if 1 
+  then
+    num := 2
+}

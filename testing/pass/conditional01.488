@@ -1,0 +1,10 @@
+{   % conditional (constant)
+    
+    var num : integer
+    
+    num := ((true) ? 1 : 0)
+    write num, newline
+    
+    num := ((false) ? 1 : 0)
+    write num, newline
+}

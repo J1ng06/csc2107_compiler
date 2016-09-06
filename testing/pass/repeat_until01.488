@@ -1,0 +1,14 @@
+{   % repeat until
+    
+    var num : integer
+    
+    num := 8
+    repeat
+        num := num -1
+    until
+        num = 0
+        
+    if num = 0
+    then write "pass", newline
+    else write "fail", newline
+}

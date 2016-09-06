@@ -1,0 +1,21 @@
+{   % function with two parameters
+    
+    function func : integer
+    {   
+        function getValue : integer
+        {
+            return with 500
+        }
+        
+        function getBoolean : boolean
+        {
+            return with false
+        }
+        
+        return with 500
+    }
+     
+    if func = 500
+    then write "PASSED", newline
+    else write "FAILED", newline
+}

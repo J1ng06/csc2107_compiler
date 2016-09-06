@@ -1,0 +1,8 @@
+% ex1201: boolean = integer
+{ 
+	var bool : boolean
+	
+	if (bool = 2)
+	then
+		exit
+}

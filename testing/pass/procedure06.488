@@ -1,0 +1,32 @@
+{   % procedure with parameters (nested procedure with parameter)
+    
+    var num : integer
+    var flag : boolean
+    
+    procedure proce(bool : boolean, count : integer)
+    {
+        var offset : integer 
+        
+        procedure proce2(numClicks : integer) 
+        {
+            offset := numClicks
+            
+            write "Expected 6000 but got ", offset, newline
+        }
+        
+        proce2(6000)
+        
+        offset := count * 2
+        
+        if bool
+        then write "TRUE Expected 200 but got ", offset, newline
+        else write "FALSE Expected 200 but got ", offset, newline
+    }
+    
+    flag := false
+    num := 100
+    
+    proce(flag, num)
+    
+    write "Expected 100 ", "but got ", num, newline
+}

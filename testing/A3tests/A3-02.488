@@ -1,0 +1,13 @@
+% A3-02.488
+% test correct declarations
+  {  
+    function F : integer { var i : integer var  p : boolean i : = 2  return with  i   }   
+    function G ( q : boolean  , j : integer ) : boolean  {   var k : integer var r : boolean  k : = j return with  q  and  r   }  
+    var T : boolean
+    procedure P  { var  i : integer var p : boolean i : = 2 p : = false   }   
+    procedure Q ( m : integer, s : boolean , n : integer )
+         {    var t : boolean  var  x , y : integer  t : = s  x : = m + n  return  }  
+    T : = G( false, 3 )
+    P
+    Q( 17 , T, F + 7 )
+  }  

@@ -1,0 +1,18 @@
+{   % repeat until
+    
+    var num : integer
+    var bool : boolean
+    
+    num := 0
+    bool := false
+    
+    repeat
+        num := num + 1
+        bool := true
+    until
+        bool
+        
+    if num = 1
+    then write "pass", newline
+    else write "fail", newline
+}

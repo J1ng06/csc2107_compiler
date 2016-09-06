@@ -1,0 +1,490 @@
+%  Assignment 4 Sample Program 2			% 2-1
+ { 							% 2-2
+   var a, b , c	: integer				% 2-3
+   var p, q, r : boolean				% 2-4
+   if p  or  q  then  a : = 3  				% 2-5
+   if not q and  not q then b : = 2 else b : = 0 	% 2-6
+   while c < 7 do  c : = 8   			 	% 2-7
+   repeat  a : = 3 exit b : = 7  until 3 = 4 		% 2-8
+   while q or r and not p do exit when not (b not= 10)	% 2-9
+   write "Value is ", a / b, " or ", b * -c , newline	% 2-10
+   read  a, c, b					% 2-11
+    { 							% 2-12
+       var m, n, c : integer				% 2-13
+       m : = 7 - b +c 					% 2-14
+        { 						% 2-15
+          var p, q, r : integer				% 2-16
+          p : = ( a  <= m ?  p + a : p - c )		% 2-17
+        } 						% 2-18
+    } 							% 2-19
+   while  not  ( p  or  q )  do	{			% 2-20
+       exit when p  and  r 				% 2-21
+       repeat {						% 2-22
+          var w, x : integer				% 2-23
+          var t, u : integer				% 2-24
+          if w < = a then exit   			% 2-25
+          t : = ( r and not q ?  a + b : t + 1 ) 	% 2-26
+       }						% 2-27
+       until not ( p or q )				% 2.28
+    }  	 % while					% 2-29
+} 							% 2-30
+
+% 2-2
+PUSHMT
+SETD 0
+
+% 2-3
+PUSH UNDEF			% Declare a, b, c
+PUSH 3
+DUPN
+
+% 2-4
+PUSH UNDEF			% Declare p, q, r
+PUSH 3
+DUPN
+
+% 2-5
+
+% if_1: 'if p or q then a := 3'
+% or_1: 'p or q'
+ADDR 0 3			% Evaluate p
+LOAD
+PUSH or_1_second
+BF
+
+PUSH MACHINE_TRUE	% or_1 short circuits if p is true
+PUSH or_1_end
+
+or_1_second:		% or_1 evaluates to q if p is false
+	ADDR 0 4
+	LOAD
+
+or_1_end:
+
+PUSH if_1_end	
+BF
+
+ADDR 0 0			% Set b := 2 if p or q is true
+PUSH 10
+STORE
+
+if_1_end:			% Leave if_1 if p or q is false
+
+% 2-6
+
+% if_2: 'if not q and not q then b := 2 else b := 0'
+% and_1: 'not q and not q'
+ADDR 0 4			% Evaluate not q
+LOAD
+PUSH MACHINE_FALSE
+EQ
+PUSH and_1_short
+BF
+
+ADDR 0 4			% and_1 evaluates to not q if not q is true
+LOAD
+PUSH MACHINE_FALSE
+EQ
+PUSH and_1_end
+BR
+
+and_1_short:			% and_1 short circuits if not q is false
+	PUSH MACHINE_FALSE
+
+and_1_end:
+
+PUSH if_2_else
+BF
+
+ADDR 0 1			% Set b to 2 if not q and not q is true
+PUSH 2
+STORE
+PUSH if_2_end
+BR
+
+if_2_else:			% Set b to 0 if not q and not q is false
+	ADDR 0 1
+	PUSH 0
+	STORE
+
+if_2_end:
+
+% 2-7
+while_1_start:			% Go to start to evaluate c < 7
+
+% 'c < 7'
+ADDR 0 2
+LOAD
+PUSH 7
+LT
+PUSH while_1_end
+BF
+
+ADDR 0 2			% Set c := 8 when c < 7 is true
+PUSH 8
+STORE
+PUSH while_1_start
+BR
+
+while_1_end:			% Leave loop when c < 7 evaluates to false
+
+% 2-8
+repeat_1_start:			% Execute loop body before checking condition
+
+ADDR 0 0			% Set a := 3
+PUSH 3
+STORE
+
+PUSH repeat_1_end		% exit loop
+BR
+
+ADDR 0 1			% Set b := 7
+PUSH 7
+STORE
+
+PUSH 3				% Check if 3 = 4
+PUSH 4
+EQ
+PUSH repeat_1_start		
+BF
+
+repeat_1_end:			% Leave loop if 3 = 4 is true
+
+% 2-9
+while_2_start:				% Check condition before executing
+
+% or_2: 'q or r and not p'
+ADDR 0 4					% Evaluate q
+LOAD
+PUSH or_2_second
+BF
+
+PUSH MACHINE_TRUE			% or_2 short circuits if q is true
+PUSH or_2_end
+BR
+
+or_2_second:				% or_2 evaluates to r and not p if q is false
+	
+	% and_2: 'r and not p'
+	ADDR 0 5				% Evaluate r
+	LOAD
+	PUSH and_2_short
+	BF
+
+	ADDR 0 3				% and_2 evaluates to not p if r is true
+	LOAD
+	PUSH MACHINE_FALSE
+	EQ
+	PUSH and_2_end
+	BR
+
+	and_2_short:			% and_2 short circuits if r is false
+		PUSH MACHINE_FALSE
+
+	and_2_end:
+
+or_2_end:
+PUSH while_2_end
+BF
+
+ADDR 0 1				% Execute loop body when or_2 is true
+LOAD
+PUSH 10
+EQ
+PUSH MACHINE_FALSE		% not=
+EQ
+PUSH MACHINE_FALSE		% not
+EQ
+PUSH MACHINE_FALSE		% yields false if not (b not= 10) is true
+EQ
+
+PUSH while_2_end		% exit when not (b not= 10) is true
+BF
+
+PUSH while_2_start
+BR
+
+while_2_end:			% Leave loop when or_2 is false
+
+% 2-10
+PUSH 'V'
+PRINTC
+PUSH 'a'
+PRINTC
+PUSH 'l'
+PRINTC
+PUSH 'u'
+PRINTC
+PUSH 'e'
+PRINTC
+PUSH ' '
+PRINTC
+PUSH 'i'
+PRINTC
+PUSH 's'
+PRINTC
+PUSH ' '
+PRINTC
+
+ADDR 0 0
+LOAD
+ADDR 0 1
+LOAD
+DIV
+PRINTI
+
+PUSH ' '
+PRINTC
+PUSH 'i'
+PRINTC
+PUSH 's'
+PRINTC
+PUSH ' '
+PRINTC
+
+ADDR 0 1
+LOAD
+ADDR 0 2
+LOAD
+NEG
+MUL
+PRINTI
+
+PUSH '\n'
+PRINTC
+
+% 2-11
+ADDR 0 0
+READI
+STORE
+
+ADDR 0 2
+READI
+STORE
+
+ADDR 0 1
+READI
+STORE
+
+% 2-13
+PUSH UNDEF
+PUSH 3
+DUPN
+
+% 2-14
+ADDR 0 6
+PUSH 7
+ADDR 0 1
+LOAD
+SUB
+ADDR 0 8
+LOAD
+ADD
+STORE
+
+% 2-16
+PUSH UNDEF
+PUSH 3
+DUPN
+
+% 2-17
+ADDR 0 9				% Get address of inner p
+
+% ce_1: 'a <= m ? p + a : p - c'
+ADDR 0 0				% Evaluate a <= m
+LOAD
+ADDR 0 6
+LOAD
+SWAP
+LT
+PUSH MACHINE_FALSE
+EQ
+PUSH ce_1_false
+BF
+
+ADDR 0 9				% Evaluate p + a if a <= m is true
+LOAD
+ADDR 0 0
+LOAD
+ADD
+PUSH ce_1_end
+BR
+
+ce_1_false:				% Evaluate p - c if a <= m is false
+	ADDR 0 9
+	LOAD
+	ADDR 0 8
+	LOAD
+	SUB
+
+ce_1_end:
+STORE					% Store result of ce_1 in inner p's address
+
+% 2-18
+PUSH 3
+POPN
+
+% 2-19
+PUSH 3
+POPN
+
+% 2-20
+while_3_start:		% Check condition before executing
+
+% or_3: 'p or q'
+ADDR 0 3			% Evaluate p
+LOAD
+PUSH or_3_second
+BF
+
+PUSH MACHINE_TRUE	% or_3 short circuits if p is true
+PUSH or_3_end
+BR
+
+or_3_second:		% or_3 evaluates to q if p is false
+	ADDR 0 4
+	LOAD
+
+or_3_end:
+
+PUSH MACHINE_FALSE	% Evaluate not p or q
+EQ
+PUSH while_3_end
+BF
+
+% 2-21
+
+% and_3: 'p and r'
+ADDR 0 3				% Evaluate p
+LOAD
+PUSH and_3_short
+BF
+
+ADDR 0 5				% and_3 evaluates to r if p is true
+LOAD
+PUSH and_3_end
+BR
+
+and_3_short:			% and_3 short circuits if p is false
+	PUSH MACHINE_FALSE
+
+and_3_end:
+
+PUSH MACHINE_FALSE		% exit if p and r is true
+EQ
+PUSH while_3_end
+BF
+
+% 2-22
+repeat_2_start:			% Execute loop body before checking condition 
+
+% 2-23
+PUSH UNDEF				% Declare w, x
+PUSH 2
+DUPN
+
+% 2-24
+PUSH UNDEF				% Declare t, u
+PUSH 2
+DUPN
+
+% 2-25
+% if_3: if w <= a then exit
+ADDR 0 6				% Check if w <= a
+LOAD
+ADDR 0 0
+LOAD
+SWAP
+LT
+PUSH MACHINE_FALSE
+EQ
+
+PUSH if_3_end
+BF
+
+PUSH repeat_2_end			% Exit loop if w <= a is true
+BR
+
+if_3_end:				% Exit if statement if w <= a is false
+
+% 2-26
+
+ADDR 0 8				% Get address of t
+
+% ce_2: 'r and not q ? a + b : t + 1'
+
+% and_4: 'r and not q'
+ADDR 0 5				% Evaluate r
+LOAD
+PUSH and_4_short
+BF
+
+ADDR 0 4				% and_4 evaluates to not q if r is true
+LOAD
+PUSH MACHINE_FALSE
+EQ
+PUSH and_4_end
+BR
+
+and_4_short:				% and_4 short circuits if r is false
+	PUSH MACHINE_FALSE
+
+and_4_end:
+PUSH ce_2_false
+BF
+
+ADDR 0 0				% ce_2 evaluates to a + b if and_4 is true
+LOAD
+ADDR 0 1
+LOAD
+ADD
+PUSH ce_2_end
+BR
+
+ce_2_false:				% ce_2 evaluates to t + 1 if and_4 is false
+	ADDR 0 8			
+	LOAD			
+	PUSH 1
+	ADD
+
+ce_2_end:
+STORE					% Store result of ce_2 in t's address
+
+% 2-27
+PUSH 4
+POPN
+
+% 2-28
+
+% or_4: 'p or q'
+ADDR 0 3				% Evaluate p
+LOAD
+PUSH or_4_second
+BF
+
+PUSH MACHINE_TRUE		% or_4 short circuits if p is true
+PUSH or_4_end
+BR
+
+or_4_second:			% or_4 evaluates to q if p is false
+	ADDR 0 5
+	LOAD
+
+or_4_end:
+
+PUSH MACHINE_FALSE
+EQ
+
+PUSH repeat_2_start
+BF
+
+repeat_2_end:			% Leave loop if not (p or q) is true
+
+% 2-29
+PUSH while_3_start:
+BR
+
+while_3_end:			% Leave loop if not (p or q) is false
+
+HALT
+

@@ -1,0 +1,12 @@
+%A3-04.488   
+% test errors in array declarations
+ { 
+   { var a1[ 0 ]  : integer a1[0] : = 0 }
+   { var a2[ -50 .. -100 ] : integer a2[ -75 ] : = 0 }
+   { var a3[ -32767 .. 32767 ] : integer a3[ 0 ] : = 0 }
+   { var p3[ 32767 .. -32767 ] : boolean p3[ 0 ] : = false }
+   { var a4[ 10 , 0 ]  : integer a4[ 5, 0] : = 0 }
+   { var a5[ 12 .. 14 , -50 .. -100 ] : integer a5[ 13 , -75 ] : = 0 }
+   { var a6[ 32767 , -32767 .. 32767 ] : integer a6[ 1 , 0  ] : = 0 }
+   { var p4[ 100 .. 1000 , 32767 .. -32767 ] : boolean p4[ 500, 0 ] : = false }
+  }  

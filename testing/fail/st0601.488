@@ -1,0 +1,4 @@
+%st0601: exit without loop
+{
+  exit
+}

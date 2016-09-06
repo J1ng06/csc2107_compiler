@@ -8,9 +8,10 @@ import compiler488.ast.BaseAST;
 public abstract class DeclarationPart extends BaseAST {
 	/** The name of the thing being declared. */
 	protected String name;
+    boolean isArray;
 
-	public DeclarationPart(String name) {
-		super();
+	public DeclarationPart(String name, int line, int column) {
+		super(line, column);
 
 		this.name = name;
 	}
@@ -18,4 +19,8 @@ public abstract class DeclarationPart extends BaseAST {
 	public String getName() {
 		return name;
 	}
+
+    public boolean isArray() {
+        return isArray;
+    }
 }

@@ -1,0 +1,19 @@
+% A3-07c.488   ===========================================
+% test statement checks
+  {  
+    var p, q : boolean
+    var i : integer
+    q : = true
+    p : =  not  false
+    while p and  q do 
+          {     {     {  
+           return
+          }     }     }  
+    while p and q do
+        if p then 
+               return with p 
+        else
+               return with i 
+     return with  14
+     { { { { return } } } }
+  }  

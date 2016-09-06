@@ -1,0 +1,14 @@
+{   % conditional in ifStmt
+    
+    var num : integer
+    var bool : boolean
+    
+    bool := true
+    % bool := ((not bool) ? true : false)
+    if ((bool) ? true : false) then
+    	write "ifStmt", newline
+    
+    bool := false
+    num := ((bool) ? 5 : 10)
+    write num, newline
+}

@@ -1,0 +1,5 @@
+% variable0201: array element is boolean
+{ 
+	var array[2] : integer
+	array[true] := 2
+}

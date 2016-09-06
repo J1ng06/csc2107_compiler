@@ -1,0 +1,10 @@
+{   % two D array with arithmetic
+    var array[-3..5, 8] : integer
+    var num : integer
+    
+    num := -2
+    array[num, 5] := 800
+    array[0, num + 1] := 1000
+    
+    write array[num, 5], newline, array[0, num + 1], newline
+}

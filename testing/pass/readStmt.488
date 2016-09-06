@@ -1,0 +1,6 @@
+{
+    var i, j: integer
+    write "Enter number, hit enter, then enter another number: "
+    read i, j
+    write "You entered: ", i, ", ", j, newline
+}

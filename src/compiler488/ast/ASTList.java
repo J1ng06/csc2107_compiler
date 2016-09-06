@@ -2,6 +2,9 @@ package compiler488.ast;
 
 import java.util.LinkedList;
 
+import compiler488.visitor.IVisitable;
+import compiler488.visitor.IVisitor;
+
 /**
  * A list of AST nodes.
  *
@@ -17,8 +20,9 @@ import java.util.LinkedList;
  * interface.
  * </p>
  */
-public class ASTList<E extends AST> extends LinkedList<E> implements AST {
+public class ASTList<E extends AST> extends LinkedList<E> implements AST, IVisitable {
 	private static final long serialVersionUID = 1L;
+	private static final int UNDEFINED = -1;
 
 	/**
 	 * Create an empty AST list
@@ -57,6 +61,13 @@ public class ASTList<E extends AST> extends LinkedList<E> implements AST {
 
 		return this;
 	}
+    public int getLine() {
+    	return isEmpty() ? UNDEFINED : getFirst().getLine();
+    }
+    
+    public int getColumn() {
+    	return isEmpty() ? UNDEFINED : getFirst().getColumn();
+    }
 
 	/**
 	 * By default, pretty-print the list with one element per line.
@@ -138,4 +149,18 @@ public class ASTList<E extends AST> extends LinkedList<E> implements AST {
 
 		return buf.toString();
 	}
+	
+public boolean containsInstance(Class<? extends AST> clazz) {
+	    for (E e : this) {
+	        if (clazz.isInstance(e)) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
 }

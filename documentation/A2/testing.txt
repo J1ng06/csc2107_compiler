@@ -1,0 +1,52 @@
+Testing Index:
+
+Passing
+    A1a.488 - From assignment 1, a program that uses all arithmetic, logical, 
+            and comparison operators.
+    A1b.488 - From assignment 1, a program using arrays including all forms of
+            array declaration, positive and negative bounds.
+    A1c.488 - From assignment 1, a program using all forms of loop building and
+            loop exit constructs.
+    A1d.488 - From assignment 1, a program using non-recursive functions and
+            procedures with and without parameters.
+    A1e.488 - From assignment 1, a program using recursive functions and
+            procedures with and without parameters.
+    arithmeticPrecedenceTest.488 - A program testing the precedence of
+            arithmetic operators (using println statements to verify.)
+    booleanPrecedenceTest.488 - A program testing the precedence of boolean
+            conditinal operators (using println statements to verify.)
+    emptyScopeExitTest.488 - An initial basic test of a program scope with 
+            one statement.
+    emptyScopeTest.488 - An initial basic test of an empty program scope.
+    oneDeclarationOneStmtTest.488 - An initial basic test of a program scope
+            with one declaration and one statement.
+    totalPrecedenceTest.488 - A comprehensive test of all precedences of
+            operators (using println statements to verify.)
+Failing
+    badBinopTest.488 - A program confirming that binary operations don't parse
+            when missing an operand.
+    condOpAssociativityTest.488 - A program confirming that conditional
+            operators don't associate (i.e. 4 < 5 < 12).
+    emptyProgTest.488 - A program testing that an empty file doesn't parse
+    misplacedDeclarationTest.488 - A program confirming that declarations that
+            are not before statements don't parse.
+    semicolonTest.488 - A program that confirms statements ending in ';' as with
+            many other languages will not parse (a possibly common typo.)
+    standaloneExprTest.488 - A program testing that just an expression by itself
+            within the main program scope does not parse.
+    unclosedParenTest.488 - A program testing that forgetting to close a left
+            parenthesis does not parse.
+    unclosedScopeTest.488 - A program testing that forgetting to close a scope
+            does not parse.
+    unscopedIfTest.488 - A program testing placing multiple statements after an
+            if but without a scope does not parse.
+
+Testing Strategy
+
+We started testing with some basics such as the empty main scope and similar
+basic passing tests listed above. Once we had more of the grammar implemented,
+we decided to use the assignment 1 programs as we believe that they have fairly
+broad and complete coverage of the 488 language. We then tested for precedence
+of expressions using println statements with JCup action code. For our failing
+tests, we decided to use some common programming mistakes such as forgetting
+to match parenthesis and braces, as well as some other common typos.

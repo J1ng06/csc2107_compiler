@@ -1,0 +1,21 @@
+{   % if statement with boolean variable
+    
+    var bool : boolean
+    var num : integer
+    var num2 : integer
+    
+    num := 6
+    num2 := 99
+    
+    bool := true
+    
+    if bool
+    then write num, newline
+    else write num2, newline
+    
+    bool := false
+    
+    if bool
+    then write num, newline
+    else write num2, newline
+}

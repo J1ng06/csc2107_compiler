@@ -1,0 +1,13 @@
+{
+    var num, num2 : integer
+    var bool : boolean
+    var array[9], array2[-8..-4, -9..2] : integer
+    
+    num := 1
+    num2 := 2
+    
+    array[2] := 8
+    array2[-6, 0] := 78 - array[2]
+    
+    write num, newline, num2, newline, array2[-6, 0], newline
+}

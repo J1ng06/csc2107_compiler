@@ -1,0 +1,9 @@
+{   % two D array
+    var array[-3..5, 8] : integer
+    
+    array[-3, 5] := 800
+    array[0, 5] := 1000
+    array[0, 5] := 900
+    
+    write array[-3, 5], newline, array[0, 5], newline
+}

@@ -1,0 +1,18 @@
+{   % procedure recursion
+    
+    var num : integer
+    
+    procedure proce(count : integer)
+    {
+        
+		write count, newline
+		count := count  - 1
+		if (count > 0) then
+			proce(count)
+    }
+    
+    num := 10
+    
+    proce(5+6)
+    write "done", newline
+}

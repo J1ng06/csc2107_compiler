@@ -1,0 +1,7 @@
+{
+    if false then {
+        write "In true branch! (This is an error!)", newline
+    } else {
+        write "In false branch", newline
+    }
+}

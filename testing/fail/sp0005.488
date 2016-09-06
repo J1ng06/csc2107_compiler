@@ -1,0 +1,18 @@
+% sp0005: declare function/procedure with same name as declared variable
+{ 
+	var num : integer
+	
+	var increase : boolean
+	var decrease : boolean
+	
+    procedure increase(num : integer, bool : boolean) {
+    	write "apple pie"
+	}
+	
+	function decrease(num : integer, bool : boolean) : boolean {
+    	write "apple pie"
+    	return with true
+	}
+	
+	num := 5
+}

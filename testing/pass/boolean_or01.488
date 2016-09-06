@@ -1,0 +1,10 @@
+{   % boolean or (constant)
+    
+    if true or false
+    then write "passed", newline
+    else write "failed", newline
+    
+    if false or false
+    then write "failed", newline
+    else write "passed", newline
+}

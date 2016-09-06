@@ -1,0 +1,8 @@
+% ex1301: boolean not= integer
+{ 
+	var bool : boolean
+	
+	if (bool not= 2)
+	then
+		exit
+}

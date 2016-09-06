@@ -1,0 +1,12 @@
+{   % array in arithmetic operation
+
+    var array[200] : integer
+    
+    array[150] := 8
+    array[100] := array[150] - 6
+
+    if array[100] = 2
+    then write "pass", newline
+    else write "fail", newline
+    
+}

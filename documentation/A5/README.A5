@@ -1,0 +1,21 @@
+         Name      |   CDF
+    -------------------------
+    Qi Jian Huang  | c6huangu
+    Jingnan Chen   | c6chenjl
+    Faith Magcalas | g3hummus
+    Steven Low     | g3lowste
+
+Qi Jian Huang - Worked with Jingnan to complete the more complex codegen
+    operations such as functions and procedures. Worked on other simpler
+    codegen operators, and wrote source files for testing
+
+Jingnan Chen - Worked with Qi Jian on complex codegen operations such as
+    functions and procedures. Worked on simpler codegen operations, and
+    updated semantics for issues from A3.
+
+Faith Magcalas - Worked on codegen operations, worked on improving semantics
+    from A3, wrote source files for testing, wrote documentation.
+
+Steven Low - Edited build file to run JUnit tests, wrote JUnit tests for
+    expected sourcefile output, wrote source files for testing, worked on
+    simpler codegen operations.

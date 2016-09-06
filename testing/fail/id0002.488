@@ -1,0 +1,10 @@
+% id0002: use un-declared ident with 'return'
+{ 
+	var num : boolean
+	
+	function apple : boolean {
+		return with num2
+	}
+	
+	num := true
+}

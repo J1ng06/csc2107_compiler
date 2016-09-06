@@ -22,8 +22,8 @@ public abstract class BinaryExpn extends Expn {
 	 */
 	protected String opSymbol;
 
-	protected BinaryExpn(String opSymbol, Expn left, Expn right) {
-		super();
+	protected BinaryExpn(String opSymbol, Expn left, Expn right, int line, int column) {
+		super(line, column);
 
 		this.opSymbol = opSymbol;
 		this.left = left;

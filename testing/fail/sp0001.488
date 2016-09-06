@@ -1,0 +1,7 @@
+% sp0001: declare declared variable
+{ 
+	var num : integer
+	var num : integer
+	
+	num := 2
+}

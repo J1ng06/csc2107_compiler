@@ -1,0 +1,8 @@
+% ex1001: boolean and non-boolean
+{ 
+	var num : integer
+	
+	if (true and 2)
+	then
+		exit
+}

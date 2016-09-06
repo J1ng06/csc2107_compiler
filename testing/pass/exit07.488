@@ -1,0 +1,16 @@
+{   % exit when true
+    
+    var num : integer
+    
+    num := 10
+    
+    while num < 100
+    do 
+    {
+        num := num + 10
+        
+        exit when num = 70
+    }
+    
+    write "Expected 70 ", "But got ", num, newline 
+}

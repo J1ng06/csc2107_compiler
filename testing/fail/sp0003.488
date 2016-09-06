@@ -1,0 +1,14 @@
+% sp0003: declare declared procedure
+{ 
+	var num : integer
+	
+    procedure decrease(num : integer, bool : boolean) {
+    	write "apple pie"
+	}
+	
+	procedure decrease(num : integer, bool : boolean) {
+    	write "apple pie"
+	}
+	
+	num := 5
+}

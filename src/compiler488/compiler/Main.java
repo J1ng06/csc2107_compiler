@@ -7,16 +7,21 @@ import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.io.PrintStream;
+import java.util.LinkedList;
 
-import java_cup.runtime.Symbol;
-import compiler488.parser.*;
-import compiler488.ast.AST;
 import compiler488.ast.BasePrettyPrinter;
 import compiler488.ast.stmt.Program;
-import compiler488.semantics.Semantics;
-import compiler488.symbol.SymbolTable;
 import compiler488.codegen.CodeGen;
-import compiler488.runtime.*;
+import compiler488.parser.Lexer;
+import compiler488.parser.Source488Parser;
+import compiler488.parser.SyntaxErrorException;
+import compiler488.runtime.ExecutionException;
+import compiler488.runtime.Machine;
+import compiler488.runtime.MachineExecutor;
+import compiler488.semantics.SemanticErrorException;
+import compiler488.semantics.Semantics;
+import compiler488.visitor.IVisitor;
+import java_cup.runtime.Symbol;
 
 /**
  * This class serves as the main driver for the CSC488S compiler.<BR>
@@ -59,7 +64,7 @@ public class Main {
 
 	// DUMP Options
 	/** User option -- dump AST after parsing */
-	private static boolean dumpAST1 = false;
+	private static boolean dumpAST1 = true;	    // TODO
 	/** User option -- dump AST after semantic analysis */
 	private static boolean dumpAST2 = false;
 	/** User option -- dump compiled code before execution */
@@ -79,7 +84,7 @@ public class Main {
 	/** User option -- trace symbol table operations */
 	public static boolean traceSymbols = false;
 	/** User option -- trace code generation */
-	public static boolean traceCodeGen = false;
+	public static boolean traceCodeGen = true;
 	/** User option -- trace program execution */
 	public static boolean traceExecution = false;
 
@@ -373,6 +378,7 @@ public class Main {
 			e.printStackTrace();
 			System.exit(100);
 		}
+		System.out.println();
 	}
 
 	/**
@@ -386,16 +392,17 @@ public class Main {
 			// INSERT CODE HERE TO DO SEMANTIC ANALYSIS
 			// e.g.
 			//
-			// ASTVisitor visitor = new Semantics();
-			// programAST.accept(visitor);
-			//
-			// or
-			//
-			// programAST.doSemantics() ;
-			//
-			// or
-			//
-			// Semantics.doIt( programAST );
+			IVisitor visitor = new Semantics();
+			programAST.accept(visitor);
+			LinkedList<SemanticErrorException> errorMessages = visitor.getErrorMessages();
+			if (errorMessages.size() > 0) {
+			    for (SemanticErrorException e : errorMessages) {
+			        System.out.println(e.getMessage());
+			    }
+			    System.out.println("Compilation ended due to semantic error(s)");
+			    return;
+			}
+			
 		} catch (Exception e) {
 			System.err.println("Exception during Semantic Analysis");
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -415,19 +422,8 @@ public class Main {
 		machine.reset();
 
 		try {
-			// INSERT CODE HERE TO DO CODE GENERATION
-			// e.g.
-			//
-			// ASTVisitor visitor = new CodeGen(machine);
-			// programAST.accept(visitor);
-			//
-			// or
-			//
-			// programAST.doCodeGen() ;
-			//
-			// or
-			//
-			// codeGen.doIt(programAST);
+			IVisitor visitor = new CodeGen(machine);
+			programAST.accept(visitor);
 		} catch (Exception e) {
 			System.err.println("Exception during Code Generation");
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());

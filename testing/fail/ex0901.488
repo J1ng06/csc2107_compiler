@@ -1,0 +1,8 @@
+% ex0901: not integer
+{ 
+	var num : integer
+	
+	if (not 2)
+	then
+		exit
+}

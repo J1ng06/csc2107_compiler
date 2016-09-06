@@ -1,0 +1,5 @@
+% va0201: array with decreasing bound
+{ 
+	var array[2..-2] : integer
+	array[2] := 2
+}

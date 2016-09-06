@@ -1,0 +1,14 @@
+{   % procedure without parameters
+    
+    var num : integer
+    
+    procedure proce
+    {
+        num := 5000
+        num := num - 8000
+    }
+    
+    proce
+    
+    write "Expected -3000 ", "but got ", num, newline
+}

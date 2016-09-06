@@ -1,0 +1,6 @@
+% in0101: read input with boolean
+{ 
+	var bool : boolean
+	bool := true
+	read bool
+}

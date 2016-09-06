@@ -1,0 +1,19 @@
+% A3-10.488   
+% test parameter errors
+  {  
+     function F : integer  {     return with 7     }  
+    var i  : integer
+    var s  : boolean
+    function G ( P : boolean , K : integer ) : boolean
+         {      return with not  P and   K < 7     }  
+    procedure P {   return   }  
+    procedure Q ( P : integer , K : boolean )  
+         {    while K do  while K do  while K do   if K or  P < 6 then return   }  
+    i : = F( 3 )
+    Q( i )
+    P( 14, s )
+    s : = G( s , 3 , true )
+    %  parameter type mismatches
+    s : = G( F , G( false , 7 ))
+    Q( ( not s ? true : s )  , ( G( s, 7 ) ? i : F ) )
+  }  

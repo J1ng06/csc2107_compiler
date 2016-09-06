@@ -1,0 +1,5 @@
+% st0101: variable int type, expression bool type
+{
+  var num : integer
+  num := true
+}

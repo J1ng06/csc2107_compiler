@@ -4,6 +4,8 @@ import compiler488.ast.ASTList;
 import compiler488.ast.PrettyPrinter;
 import compiler488.ast.stmt.Scope;
 import compiler488.ast.type.Type;
+import compiler488.symbol.SymbolTable;
+import compiler488.visitor.IVisitor;
 
 /**
  * Represents the declaration of a function or procedure.
@@ -21,8 +23,11 @@ public class RoutineDecl extends Declaration {
 
 	/** The body of this routine (if any.) */
 	private Scope body = null;
+	private boolean isFunction = false;
+	private SymbolTable symbolTable;
+	private int paramCount;	
 
-	/**
+    /**
 	 * Construct a function with parameters, and a definition of the body.
 	 *
 	 * @param name
@@ -34,11 +39,13 @@ public class RoutineDecl extends Declaration {
 	 * @param body
 	 *            Body scope for the routine
 	 */
-	public RoutineDecl(String name, Type type, ASTList<ScalarDecl> parameters, Scope body) {
-		super(name, type);
+	public RoutineDecl(String name, Type type, ASTList<ScalarDecl> parameters, Scope body, int line, int column) {
+		super(name, type, line, column);
 
 		this.parameters = parameters;
+		this.isFunction = true;
 		this.body = body;
+		this.paramCount = parameters.size();
 	}
 
 	/**
@@ -51,8 +58,10 @@ public class RoutineDecl extends Declaration {
 	 * @param body
 	 *            Body scope for the routine
 	 */
-	public RoutineDecl(String name, Type type, Scope body) {
-		this(name, type, new ASTList<ScalarDecl>(), body);
+	public RoutineDecl(String name, Type type, Scope body, int line, int column) {
+		this(name, type, new ASTList<ScalarDecl>(), body, line, column);
+		this.paramCount = 0;
+		this.isFunction = true;
 	}
 
 	/**
@@ -65,11 +74,13 @@ public class RoutineDecl extends Declaration {
 	 * @param body
 	 *            Body scope for the routine
 	 */
-	public RoutineDecl(String name, ASTList<ScalarDecl> parameters, Scope body) {
-		this(name, null, parameters, body);
+	public RoutineDecl(String name, ASTList<ScalarDecl> parameters, Scope body, int line, int column) {
+		this(name, null, parameters, body, line, column);
 
 		this.parameters = parameters;
 		this.body = body;
+		this.isFunction = false;
+		this.paramCount = parameters.size();
 	}
 
 	/**
@@ -80,18 +91,40 @@ public class RoutineDecl extends Declaration {
 	 * @param body
 	 *            Body scope for the routine
 	 */
-	public RoutineDecl(String name, Scope body) {
-		this(name, null, new ASTList<ScalarDecl>(), body);
+	public RoutineDecl(String name, Scope body, int line, int column) {
+		this(name, null, new ASTList<ScalarDecl>(), body, line, column);
+		this.paramCount = 0;
+		this.isFunction = false;
 	}
 
 	public ASTList<ScalarDecl> getParameters() {
 		return parameters;
 	}
 
-	public Scope getBody() {
+	public boolean isFunction() {
+        return isFunction;
+    }
+
+    public SymbolTable getSymbolTable() {
+        return this.symbolTable;
+    }
+    
+    public void setSymbolTable(SymbolTable st) {
+        this.symbolTable = st;
+    }
+
+    public Scope getBody() {
 		return body;
 	}
+    
+    public int getParamCount() {
+        return paramCount;
+    }
 
+    public void setParamCount(int paramCount) {
+        this.paramCount = paramCount;
+    }
+    
 	@Override
 	public void prettyPrint(PrettyPrinter p) {
 		if (type == null) {
@@ -117,4 +150,9 @@ public class RoutineDecl extends Declaration {
 			body.prettyPrint(p);
 		}
 	}
+	
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
 }

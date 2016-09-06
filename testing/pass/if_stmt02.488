@@ -1,0 +1,10 @@
+{   % if statement with false constant
+    var num : integer
+    
+    num := 8
+    
+    if false
+    then write num, newline
+
+    write "end", newline
+}

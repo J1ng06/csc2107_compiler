@@ -1,0 +1,12 @@
+{
+    var num : integer
+    var num2 : integer
+    var num3 : integer
+    
+    num2 := 2
+    num3 := 5
+    
+    num := num2 + num3
+
+    write num, newline
+}

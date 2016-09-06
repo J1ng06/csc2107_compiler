@@ -1,0 +1,6 @@
+% de0101: declare integer, use as boolean
+{ 
+	var num : integer
+	
+  	num := bool
+}

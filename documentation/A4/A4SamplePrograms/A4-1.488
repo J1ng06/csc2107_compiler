@@ -1,0 +1,366 @@
+%  Assignment 4 Sample Program 1                        % 1-1
+ {                                                      % 1-2
+   var i, j, k, l, m : integer                          % 1-3
+   var p, q, r, s, t : boolean                          % 1-4
+   k : = (i+3) - j*k + k/l                              % 1-5
+   p : = true                                           % 1-6
+   q : = false                                          % 1-7
+   r : = not q or ( p or q ) or (s and  not p)          % 1-8
+   p : = ( i < j ) or ( k <= l ) or ( j = l )           % 1-9
+   s : = ( k not = m ) and ( j >= k ) and not ( r = s ) % 1-10
+   q : = ( r = s )  or  (  not s  not = r )             % 1-11
+   {                                                    % 1-12
+   var A[7] , B[ -100..50 , -40..-30 ] : integer        % 1-13
+   var C[ -7 .. -3 ], D[ 50, 20 ] : boolean             % 1-14
+   B[i+1, j-100 ] : = A[j-2]                            % 1-15
+   C[-4] : = D[ i + 20 , k - 7 ]                        % 1-16
+   }                                                    % 1-17
+ }                                                      % 1-18
+
+% -------------------------------- ASSEMBLY -----------------------------------
+
+% Calculate space for local variables
+% (Minor scope is considered part of major):
+% i, j, k, l, m                       = 5
+% p, q, r, s, t                       = 5
+% A[7]                                = 7
+% B[-100..50, -40..-30]    = 151 * 11 = 1661
+% C[-7..-3]                           = 5
+% D[50, 20]                           = 1000
+%                               Total = 2683
+
+% 1-2 : Main program initialization.
+% 1-3, 1-4 : Reserve space for local variables
+    PUSHMT
+    SETD 0
+    PUSH UNDEFINED
+    PUSH 2683
+    DUPN                    % Reserve enough space for the locals
+
+% 1-5 : Assign to k (ADDR 0 2) the value of the RHS which
+% will need to be calculated in steps:
+    ADDR 0 2                % Stack: ADDR 0 2 <--- top
+
+    % Step 1: (i + 3)
+    ADDR 0 0                % Stack: ADDR 0 2, ADDR 0 0 <--- top
+    LOAD                    % Stack: ADDR 0 2, i <--- top
+    PUSH 3                  % Stack: ADDR 0 2, i, 3 <--- top
+    ADD                     % Stack: ADDR 0 2, (i + 3) <--- top
+
+    % Step 2: j * k
+    ADDR 0 1                % Stack: ADDR 0 2, (i + 3), ADDR 0 1 <--- top
+    LOAD                    % Stack: ADDR 0 2, (i + 3), j <--- top
+    ADDR 0 2                % Stack: ADDR 0 2, (i + 3), j, ADDR 0 2 <--- top
+    LOAD                    % Stack: ADDR 0 2, (i + 3), j, k <--- top
+    MUL                     % Stack: ADDR 0 2, (i + 3), (j * k) <--- top
+
+    % Step 3: (i + 3) - (j * k)
+    SUB                     % Stack: ADDR 0 2, ((i+3)-(j*k)) <--- top
+
+    % Step 4: k / l
+    ADDR 0 2                % Stack: ADDR 0 2, ((i+3)-(j*k)), ADDR 0 2 <--- top
+    LOAD                    % Stack: ADDR 0 2, ((i+3)-(j*k)), k <--- top
+    ADDR 0 3                % Stack: ADDR 0 2, ((i+3)-(j*k)), k, ADDR 0 3 <--- top
+    LOAD                    % Stack: ADDR 0 2, ((i+3)-(j*k)), k, l <--- top
+    DIV                     % Stack: ADDR 0 2, ((i+3)-(j*k)), (k / l) <--- top
+
+    % Step 5: ((i+3)-(j*k)) + (k/l)
+    ADD                     % Stack: ADDR 0 2, ((i+3)-(j*k))+(k/l) <--- top
+
+    % Step 6: assign to k
+    STORE                   % Stack: <--- top
+
+% 1-6 : Assign MACHINE_TRUE to p
+    ADDR 0 5                % Stack: ADDR 0 5 <--- top
+    PUSH MACHINE_TRUE       % Stack: ADDR 0 5, MACHINE_TRUE <--- top
+    STORE                   % Stack: <--- top
+
+% 1-7 : Assign MACHINE_FALSE to q
+    ADDR 0 6                % Stack: ADDR 0 6 <--- top
+    PUSH MACHINE_FALSE      % Stack: ADDR 0 6, MACHINE_FALSE <--- top
+    STORE                   % Stack: <--- top
+
+% 1-8 : Assign to r (ADDR 0 7) the value of the RHS which
+% will need to be calculated in steps:
+    ADDR 0 7                % Stack: ADDR 0 7 <--- top
+
+    % Evaluate (not q):
+    ADDR 0 6                % Stack: ADDR 0 7, ADDR 0 6 <--- top
+    LOAD                    % Stack: ADDR 0 7, q <--- top
+    PUSH MACHINE_FALSE      % Stack: ADDR 0 7, q, MACHINE_FALSE <--- top
+    EQ                      % Stack: ADDR 0 7, (not q) <--- top
+
+    % Continue into _branch0 if we can't short circuit:
+    PUSH _branch0           % Stack: ADDR 0 7, (not q), _short0 <--- top
+    BF                      % Stack: ADDR 0 7 <--- top
+    % If we can short circuit, push the (not q) true result back onto the
+    % stack, and branch to Storing the result.
+    PUSH MACHINE_TRUE       % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+    PUSH _store_result      % Stack: ADDR 0 7, MACHINE_TRUE, _store_result <--- top
+    BR                      % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+
+    % Evaluate (p or q)
+    _branch0:
+        ADDR 0 5                % Stack: ADDR 0 7, ADDR 0 5 <--- top
+        LOAD                    % Stack: ADDR 0 7, p <--- top
+        % continue into _branch1 if we can't short circuit.
+        PUSH _branch1           % Stack: ADDR 0 7, p, _branch1 <--- top
+        BF                      % Stack: ADDR 0 7 <--- top
+        % If we can short circuit, restore the true result to the stack
+        % and continue on to (s and not p)
+        PUSH MACHINE_TRUE       % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+        PUSH _end1              % Stack: ADDR 0 7, MACHINE_TRUE, _end1 <--- top
+        BR                      % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+        % Evaluate q in (p or q)
+        _branch1:
+            ADDR 0 6                % Stack: ADDR 0 7, ADDR 0 6 <--- top
+            LOAD                    % Stack: ADDR 0 7, q <--- top
+        % continue into _branch2 if we can't short circuit after (p or q):
+        _end1:
+            PUSH _branch2           % Stack: depends on path to _end1.
+            BF                      % Stack: ADDR 0 7 <--- top
+            % if we can short circuit after (p or q), then restore the true
+            % result and continue to _end2.
+            PUSH MACHINE_TRUE       % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+            PUSH _end2              % Stack: ADDR 0 7, MACHINE_TRUE, _end2 <--- top
+            BR                      % Stack: ADDR 0 7, MACHINE_TRUE <--- top
+            % evaluate (s and not p)
+            _branch2:
+                ADDR 0 8                % Stack: ADDR 0 7, ADDR 0 8 <--- top
+                LOAD                    % Stack: ADDR 0 7, s <--- top
+                % if s is false, we can short circuit to branch 3.
+                PUSH _branch3:          % Stack: ADDR 0 7, s, _branch3 <--- top
+                BF                      % Stack: ADDR 0 7 <--- top
+                % if we can't short circuit evaluate (not p)
+                ADDR 0 5                % Stack: ADDR 0 7, ADDR 0 5 <--- top
+                LOAD                    % Stack: ADDR 0 7, p <--- top
+                PUSH MACHINE_FALSE      % Stack: ADDR 0 7, p, MACHINE_FALSE <--- top
+                EQ                      % Stack: ADDR 0 7, (not p) <--- top
+                PUSH _end3              % Stack: ADDR 0 7, (not p), _end3 <--- top
+                BR                      % Stack: ADDR 0 7, (not p) <--- top
+                _branch3:
+                    PUSH MACHINE_FALSE      % Stack: ADDR 0 7, MACHINE_FALSE
+
+                _end3:
+            _end2:
+    _store_result:
+        STORE
+
+% 1-9 : Assign to p (ADDR 0 5) the value of the RHS
+% which we calculate in steps:
+    ADDR 0 5                % Stack: ADDR 0 5 <--- top
+
+    % Evaluate (i < j)
+    ADDR 0 0                % Stack: ADDR 0 5, ADDR 0 0 <--- top
+    ADDR 0 1                % Stack: ADDR 0 5, ADDR 0 0, ADDR 0 1 <--- top
+    LT                      % Stack: ADDR 0 5, (i < j) <--- top
+
+    % If we can't short circuit i.e. (i < j) is false, we will continue to
+    % _br1
+    PUSH _br1               % Stack: ADDR 0 5, (i < j), _br1 <--- top
+    BF                      % Stack: ADDR 0 5 <--- top
+    % If we can short circuit, restore the true value to the stack, and
+    % branch to _e1
+    PUSH MACHINE_TRUE       % Stack: ADDR 0 5, MACHINE_TRUE <--- top
+    PUSH _e1                % Stack: ADDR 0 5, MACHINE_TRUE, _e1 <--- top
+    BR                      % Stack: ADDR 0 5, MACHINE_TRUE <--- top
+
+    % Evaluate (k <= l) - Same as (l not < k)
+    _br1:
+        ADDR 0 2                % Stack: ADDR 0 5, ADDR 0 2 <--- top
+        LOAD                    % Stack: ADDR 0 5, k <--- top
+        ADDR 0 3                % Stack: ADDR 0 5, k, ADDR 0 3 <--- top
+        LOAD                    % Stack: ADDR 0 5, k, l <--- top
+        SWAP                    % Stack: ADDR 0 5, l, k <--- top
+        LT                      % Stack: ADDR 0 5, (l < k) <--- top
+        PUSH MACHINE_FALSE      % Stack: ADDR 0 5, (l < k), MACHINE_FALSE <--- top
+        EQ                      % Stack: ADDR 0 5, (k <= l) <--- top
+        % If we can't short circuit i.e. (k <= l) is false, we
+        % will continue to _br2:
+        PUSH _br2               % Stack: ADDR 0 5, (k <= l), _br2 <--- top
+        BF                      % Stack: ADDR 0 5 <--- top
+        % If we can short circuit, restore the true value to the stack and
+        % branch to _e2
+        PUSH MACHINE_TRUE       % Stack: ADDR 0 5, MACHINE_TRUE <--- top
+        PUSH _e2                % Stack: ADDR 0 5, MACHINE_TRUE, _e2 <--- top
+        BR                      % Stack: ADDR 0 5, MACHINE_TRUE <--- top
+
+        % Evaluate (j = l)
+        br_2:
+            ADDR 0 1                % Stack: ADDR 0 5, ADDR 0 1 <--- top
+            LOAD                    % Stack: ADDR 0 5, j <--- top
+            ADDR 0 3                % Stack: ADDR 0 5, j, ADDR 0 3 <--- top
+            LOAD                    % Stack: ADDR 0 5, j, l <--- top
+            EQ                      % Stack: ADDR 0 5, (j = l) <--- top
+        _e2:
+    _e1:
+    STORE
+
+% 1-10 : Assign to s (ADDR 0 8) the value of the RHS
+% which we calculate in steps
+    ADDR 0 8                % Stack: ADDR 0 5 <--- top
+
+    % Evaluate (k not= m)
+    ADDR 0 2                % Stack: ADDR 0 5, ADDR 0 2 <--- top
+    LOAD                    % Stack: ADDR 0 5, k <--- top
+    ADDR 0 4                % Stack: ADDR 0 5, k, ADDR 0 4 <--- top
+    LOAD                    % Stack: ADDR 0 5, k, m <--- top
+    EQ                      % Stack: ADDR 0 5, (k = m) <--- top
+    PUSH MACHINE_FALSE      % Stack: ADDR 0 5, (k = m), MACHINE_FALSE <--- top
+    EQ                      % Stack: ADDR 0 5, (k not= m)
+
+    % If we can short circuit i.e (k not= m) is false, jump to _sc1 at the end
+    PUSH _sc1               % Stack: ADDR 0 5, (k not= m), _sc1 <--- top
+    BF                      % Stack: ADDR 0 5 <--- top
+    % If we can't short circuit, continue with the next expression:
+    % Evaluate (j >= k) same as (j not < k)
+    ADDR 0 1                % Stack: ADDR 0 5, ADDR 0 1 <--- top
+    LOAD                    % Stack: ADDR 0 5, j <--- top
+    ADDR 0 2                % Stack: ADDR 0 5, j, ADDR 0 2 <--- top
+    LOAD                    % Stack: ADDR 0 5, j, k <--- top
+    LT                      % Stack: ADDR 0 5, (j < k) <--- top
+    PUSH MACHINE_FALSE      % Stack: ADDR 0 5, (j < k), MACHINE_FALSE <--- top
+    EQ                      % Stack: ADDR 0 5, (j >= k) <--- top
+
+    % If we can short circuit i.e (j >= k) is false, jump to _sc2 at the end
+    PUSH _sc2               % Stack: ADDR 0 5, (j >= k), _sc2 <--- top
+    BF                      % Stack: ADDR 0 5 <--- top
+    % If we can't short circuit, continue with next expression:
+    % Evaluate (not (r = s))
+    ADDR 0 7                % Stack: ADDR 0 5, ADDR 0 7 <--- top
+    LOAD                    % Stack: ADDR 0 5, r <--- top
+    ADDR 0 8                % Stack: ADDR 0 5, r, ADDR 0 8 <--- top
+    LOAD                    % Stack: ADDR 0 5, r, s <--- top
+    EQ                      % Stack: ADDR 0 5, (r = s) <--- top
+    PUSH MACHINE_FALSE      % Stack: ADDR 0 5, (r = s), MACHINE_FALSE <--- top
+    EQ                      % Stack: ADDR 0 5, (not (r = s)) <--- top
+    % If we make it this far, branch over the other short circuits
+
+    PUSH _en2               % Stack ADDR 0 5, (not (r = s)), _end <--- top
+    BR                      % Stack ADDR 0 5, (not (r = s)) <--- top
+    _sc2:
+        PUSH MACHINE_FALSE
+    _en2:
+    PUSH _en1
+    BR
+    _sc1:
+        PUSH MACHINE_FALSE
+    _en1:
+    STORE
+
+% 1-11 : Assign to q (ADDR 0 6) the value of the RHS
+% which we calculate in steps
+    ADDR 0 6                % Stack: ADDR 0 6                    % leaving out <--- top
+                                                                 % because i got tired of it.
+    % Evaluate (r = s)
+    ADDR 0 7                % Stack: ADDR 0 6, ADDR 0 7
+    LOAD                    % Stack: ADDR 0 6, r
+    ADDR 0 8                % Stack: ADDR 0 6, r, ADDR 0 8
+    LOAD                    % Stack: ADDR 0 6, r, s
+    EQ                      % Stack: ADDR 0 6, (r = s)
+
+    % If we can't short circuit i.e. (r = s) is false, jump to
+    % next expn
+    PUSH _next              % Stack: ADDR 0 5, (r = s), _next
+    BF                      % Stack: ADDR 0 5
+    % If we can short circuit, replace the true value and jump to the end
+    PUSH MACHINE_TRUE       % Stack: ADDR 0 5, MACHINE_TRUE
+    PUSH _end               % Stack: ADDR 0 5, MACHINE_TRUE, _end
+    BR                      % Stack: ADDR 0 5, MACHINE_TRUE
+
+    % Evaluate (not s not= r)):
+    _next:
+        % (not s)
+        ADDR 0 8            % Stack: ADDR 0 5, ADDR 0 8
+        LOAD                % Stack: ADDR 0 5, s
+        PUSH MACHINE_FALSE  % Stack: ADDR 0 5, s, MACHINE_FALSE
+        EQ                  % Stack: ADDR 0 5, (not s)
+        % (not s not= r)
+        ADDR 0 7            % Stack: ADDR 0 5, (not s), ADDR 0 7
+        LOAD                % Stack: ADDR 0 5, (not s), r
+        EQ                  % Stack: ADDR 0 5, ((not s) = r)
+        PUSH MACHINE_FALSE  % Stack: ADDR 0 5, ((not s) = r), MACHINE_FALSE
+        EQ                  % Stack: ADDR 0 5, ((not s) not= r)
+
+    _end:
+    STORE
+
+% 1-15 : Assign to B[i+1, j-100] the value of A[j-2]
+    % base addr of B:
+    ADDR 0 11               % Stack: ADDR 0 11
+    % Calculate row offset:
+    % First Dim offset:
+    ADDR 0 0                % Stack: ADDR 0 11, ADDR 0 0
+    LOAD                    % Stack: ADDR 0 11, i
+    PUSH 1                  % Stack: ADDR 0 11, i, 1
+    ADD                     % Stack: ADDR 0 11, (i + 1)
+    PUSH -100               % Stack: ADDR 0 11, (i + 1), -100
+    SUB                     % Stack: ADDR 0 11, ((i + 1) - -100)
+    PUSH 11                 % Stack: ADDR 0 11, ((i + 1) - -100), 11
+    MUL                     % Stack: ADDR 0 11, ((i + 1) - 100) * 11
+    % Second Dim offset:
+    ADDR 0 1                % Stack: ADDR 0 11, ((i + 1) - -100) * 11, ADDR 0 1
+    LOAD                    % Stack: ADDR 0 11, ((i + 1) - -100) * 11, j
+    PUSH 100                % Stack: ADDR 0 11, ((i + 1) - -100) * 11, j, 100
+    SUB                     % Stack: ADDR 0 11, ((i + 1) - -100) * 11, (j-100)
+    PUSH -40                % Stack: ADDR 0 11, ((i + 1) - -100) * 11, (j-100), -40
+    SUB                     % Stack: ADDR 0 11, ((i + 1) - -100) * 11, ((j-100) - -40)
+    % Add offsets to base:
+    ADD
+    ADD                     % Stack: (ADDR of element in B)
+
+    % Now we find A[j-2]
+    % base addr of A:
+    ADDR 0 10               % Stack: (ADDR of element in B), ADDR 0 10
+    % row offset:
+    ADDR 0 1                % Stack: (ADDR of element in B), ADDR 0 10, ADDR 0 1
+    LOAD                    % Stack: (ADDR of element in B), ADDR 0 10, j
+    PUSH 2                  % Stack: (ADDR of element in B), ADDR 0 10, j, 2
+    SUB                     % Stack: (ADDR of element in B), ADDR 0 10, (j-2)
+    PUSH 1                  % Stack: (ADDR of element in B), ADDR 0 10, (j-1), 1
+    SUB                     % Stack: (ADDR of element in B), ADDR 0 10, (j-1)-1
+    % Add row offset to base:
+    ADD                     % Stack: (ADDR of element in B), (ADDR of element in A)
+    LOAD                    % Stack: (ADDR of element in B), A[j-2]
+
+    % Now store it:
+    STORE
+
+% 1-16 : Assign to C[-4] the value of D[i+20, k-7]
+    % base addr of C:
+    ADDR 0 12               % Stack: ADDR 0 12
+    % row offset:
+    PUSH -4                 % Stack: ADDR 0 12, -4
+    PUSH -7                 % Stack: ADDR 0 12, -4, -7
+    SUB                     % Stack: ADDR 0 12, (-4 - -7)
+    % Add row offset to base:
+    ADD                     % Stack: (ADDR of element in C)
+
+    % base addr of D:
+    ADDR 0 13               % Stack: (ADDR of element in C), ADDR 0 13
+    % row offset:
+    ADDR 0 0                % Stack: (ADDR of element in C), ADDR 0 13, ADDR 0 0
+    LOAD                    % Stack: (ADDR of element in C), ADDR 0 13, i
+    PUSH 20                 % Stack: (ADDR of element in C), ADDR 0 13, i, 20
+    ADD                     % Stack: (ADDR of element in C), ADDR 0 13, (i+20)
+    PUSH 1                  % Stack: (ADDR of element in C), ADDR 0 13, (i+20), 1
+    SUB                     % Stack: (ADDR of element in C), ADDR 0 13, (i+20)-1
+    PUSH 20                 % Stack: (ADDR of element in C), ADDR 0 13, (i+20)-1, 20
+    MUL                     % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20
+    $ col offset:
+    ADDR 0 2                % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20, ADDR 0 2
+    LOAD                    % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20, k
+    PUSH 7                  % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20, k, 7
+    SUB                     % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20, (k-7)
+    PUSH 1                  % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-1)*20, (k-7), 1
+    SUB                     % Stack: (ADDR of element in C), ADDR 0 13, ((i+20)-50)*20, (k-7)-1
+    % Add offsets to base:
+    ADD
+    ADD                     % Stack: (ADDR of element in C), (ADDR of element in D)
+
+    % LOAD it and store it in C[-4]
+    LOAD                    % Stack: (ADDR of element in C), D[i+20, k-7]
+    STORE
+
+% 1-18 : End the program
+    HALT

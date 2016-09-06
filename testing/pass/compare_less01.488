@@ -1,0 +1,10 @@
+{   %comparator LESS (constant)
+    
+    if 5 < 6
+    then write "passed", newline
+    else write "failed", newline
+    
+    if 6 < 5
+    then write "failed", newline
+    else write "passed", newline
+}

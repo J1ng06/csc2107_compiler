@@ -1,0 +1,19 @@
+% A3-06a.488
+%  test correct recursive calls
+ { 
+    procedure P( n : integer , m : boolean) 
+       { 
+	var k : integer
+	function Q( i : integer ) : integer
+	    { 
+		if i < n then
+		   P( i , m )
+		else
+		   k : = Q( n - 1 )
+	        return with n + k + i 
+             }   % Q
+	if m then  P( n - 1 ,  not m )   
+        k : = Q( 19 )
+       }   %P
+   P( 13 , false ) 
+ } 

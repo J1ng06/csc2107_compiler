@@ -1,0 +1,427 @@
+Global Instructions:
+
+# unconditional branch, where label is the address
+    BR label:
+        PUSH label
+        BR
+        
+# conditional branch, where label is the address
+    BF label:
+        PUSH label
+        BF
+
+# false expression equals MACHINE_FALSE yields MACHINE_TRUE (false = false yields true)
+    NOT: 
+        PUSH MACHINE_FALSE
+        EQ
+
+****************************************************************************
+
+1. Storage
+
+lexical level (LL): 
+    start with 0 at main program scope, and will be 
+    incremented if new scope is created within current scope.
+
+order number (ON): 
+    representing the offset of the identifier from 
+    the beginning of the activity record, it will be incremented
+    by the size of each added identifier (1 word for integer and boolean
+    scalar variables, and (1 x number of elements) words for arrays).
+	
+Addressing: 
+    scalar variable address within the activation record is 
+    calculated based on sum of starting address of the 
+    activation record and the order number for the identifier).
+    
+    array variable address within the activation record is
+    calculated based on sum of starting address of the
+    activation record and the order number for the identifier.
+    
+    the array element is computed by adding row offset and column offset to 
+    the starting array address.
+    
+    for 1D array, the row offset is the difference between the accessed index
+    and the lower bound for the array (row_offset = accessed_index - lb_index).
+    
+    for 2D array, the row offset is the difference between the accessed index
+    and the lower bound in first dimension and multiply by the length of second 
+    dimension array (row_offset = (accessed_index (1st D) - lb_index (1st D) * (2nd dimension array length).
+    The column offset is the difference between the accessed index and lower bound in second 
+    dimension (col_offset = (accessed_index (2nd D) - lb_index (2nd D)). 
+
+a. variables in the main program
+
+    In the main program, storage for variables will be allocated in the 
+    activation record of its containing scope (aka the main program). For
+    each identifier, its lexical level and order number will be stored 
+    within the symbol table entry, and all identifiers’ values are 
+    determined during semantic analysis. 
+
+Examples:
+
+# assume a variable x is defined, first assign integer constant 2 into 
+# variable x (x = 2), then perform operation x = x + 3
+
+# address of variable x on stack
+    ADDR LL ON 
+    
+# push integer constant 2 onto stack
+    PUSH 2
+    
+# store integer constant 2 into variable x in memory 
+    STORE
+    
+# address of variable x on stack
+    ADDR LL ON
+    
+ # address of variable x on stack again 
+    ADDR LL ON
+    
+# load the value of x from memory address onto stack
+    LOAD 
+    
+# push integer constant 3 onto stack
+    PUSH 3 
+    
+# perform addition (3 + x)
+    ADD
+    
+# store (3 + x) into address of x in memory (aka: x = x + 3)
+    STORE 
+
+b. variables in procedures and functions
+
+    Variables in procedures and functions are handled similar to "variables
+    in main program", except the lexical level will be greater than 0. 
+
+c. variables in minor scopes ( e.g. ’{’ declaration statement ’}’ )
+
+    Declared identifiers within a minor scope will belong to its major
+    scope, which it means the lexical level will be the same, no new
+    lexical level is created at this point. 
+
+d. integer and boolean constants ( e.g. ’true’ and ’false’ )
+
+    Integer and boolean constants will be pushed onto stack where needed,
+    no need to allocate storage space for them. 
+
+Examples:
+
+#integer constant 5: 
+    PUSH 5
+    
+# boolean constant true: 
+    PUSH MACHINE_TRUE
+    
+# boolean constant false: 
+    PUSH MACHINE_FALSE
+
+e. text constants ( e.g. ”Like This” )
+
+    Text constants will be pushed onto stack as required.
+
+Example:
+
+# write "cat": 
+    PUSH "c"
+    PRINTC
+    PUSH "a"
+    PRINTC
+    PUSH "t"
+    PRINTC
+
+****************************************************************************
+
+2. Expressions
+ 
+a. describe how the values of constants (including text constants) will be accessed.
+
+    Push them onto stack as there is no need to store these values in the memory.
+
+Examples:
+
+#integer constant 5: 
+    PUSH 5
+    
+# boolean constant true: 
+    PUSH MACHINE_TRUE
+    
+# boolean constant false: 
+    PUSH MACHINE_FALSE
+    
+# write "cat":
+    PUSH 'c'
+    PRINTC
+    PUSH 'a'
+    PRINTC
+    PUSH 't'
+    PRINTC
+
+b. describe how the values of scalar variables will be accessed.
+
+    To access a value of scalar variable, the variable's memory address is pushed
+    onto the stack, and then load the value of that memory address onto the stack.
+
+Examples:
+
+# scalar variable address: 
+    ADDR LL ON
+    
+# load the value from address to stack: 
+    LOAD
+
+c. Describe how array elements will be accessed.
+Show details of array subscripting in the general case for one and two dimensional arrays.
+
+    For details, refer to "1. Storage -> Addressing" session.
+
+Examples:
+
+# For 1D:
+# array base address:
+    ADDR LL ON
+
+# calculate row offset
+    PUSH accessed_index
+    PUSH lb_index
+    SUB
+    
+# add the offset to the array base adress
+    ADD
+    
+# load the value of the address onto stack
+    LOAD
+    
+# For 2D
+# array base address:
+    ADDR LL ON
+    
+# calculate the row offset
+    PUSH accessed_index_1D
+    PUSH lb_index_1D
+    SUB
+    PUSH array_length_2D
+    MUL
+    
+# calculate the col offset
+    PUSH accessed_index_2D
+    PUSH lb_index_2D
+    SUB
+    
+# add row and col offset then add it to array base address
+    ADD
+    ADD
+    
+# load the value of theadress onto stack
+    LOAD
+
+d. describe how you will implement each of the arithmetic operators +, -, *, and /
+
+    Arithmetic operators are already implemented in the machine instructions (ADD, SUB,
+    MUL, DIV，NEG). they are implemented by recursively evaluate the two operands and then use
+    the provided instruction to compute the operator result from the two evaluated operands.
+
+Examples:
+    
+# 1 + 2:
+    PUSH 1
+    PUSH 2
+    ADD
+
+# 2 - 1:
+    PUSH 2
+    PUSH 1
+    SUB
+
+# 2 * 1:
+    PUSH 2
+    PUSH 1
+    MUL
+
+# 2 / 1:
+    PUSH 2
+    PUSH 1
+    DIV
+
+# -5:
+    PUSH 5
+    NEG
+
+e. describe how you will implement each of the comparison operators < , < =, =, ’not’ =, >=, >
+
+    The operators "LT" and "EQ" is provided, the other operators will be transformed using provided operators.
+
+Examples:
+
+# 1 < 2:
+    PUSH 1
+    PUSH 2
+    LT
+
+# 2 <= 3: same as 3 not < 2
+    PUSH 2
+    PUSH 3
+    SWAP
+    LT
+    NOT
+
+# 2 = 2:
+    PUSH 2
+    PUSH 2
+    EQ
+
+# 3 not = 2:
+    PUSH 3
+    PUSH 2
+    EQ
+    NOT
+
+# 3 >= 2: same as 3 not < 2
+    PUSH 3
+    PUSH 2
+    LT
+    NOT
+
+# 3 > 2: same as 2 < 3
+    PUSH 3
+    PUSH 2
+    SWAP
+    LT
+
+f. describe how you will implement each of the boolean operators ’and’ , ’or’ , ’not’
+
+    The operator "or" is provided, the "and" and "not" operators are transformed 
+    using "or" operator.
+
+Examples:
+
+＃ true and true: using De-Morgan's laws: and = not(not(a) | not(b))
+    PUSH MACHINE_TRUE
+    NOT
+    PUSH MACHINE_TRUE
+    NOT
+    OR
+    NOT
+
+＃ true or false;
+    PUSH MACHINE_TRUE
+    PUSH MACHINE_FALSE
+    OR
+
+＃ not true:
+    PUSH MACHINE_TRUE
+    NOT
+
+g. describe how you will implement conditional expressions
+
+    conditional expressions are implemented using comparison operators 
+    and conditional/unconditional branch. In below examples, conditional
+    statements also included.  
+
+# Example: bool = (3 < 5 ? true : false): 
+# assume boolean scalar variable "bool" is defined
+
+# 'bool' variable address
+    ADDR LL ON
+
+# push integer constant 3 and 5 onto stack
+    PUSH 3
+    PUSH 5
+
+# compare using 'LT' comparator
+    LT
+
+# if true, then get the true value then jump to end, else jump to label_else
+    BF label_else 
+    PUSH MACHINE_TRUE
+    BR label_end  
+
+# label_else instruction, then get false value then jump to end
+    label_else
+    PUSH MACHINE_FALSE
+    label_end
+    
+# store the result into variable 'bool'
+    STORE
+
+# Example: if (3 < 5) then write 'cat'
+# compare (3 < 5) boolean expression
+    PUSH 3
+    PUSH 5
+    LT
+
+# if above statement false, jump to end, else write 'cat'
+    BF label_end
+    PUSH "c"
+    PRINTC
+    PUSH "a"
+    PRINTC
+    PUSH "t"
+    PRINTC
+    
+# end
+    label_end
+
+# Example: if (3 < 5) then write 'cat' else write 'dog'
+# compare (3 < 5) boolean expression
+    PUSH 3
+    PUSH 5
+    LT
+
+# if above statement false, jump to else write 'dog', else write 'cat'
+    BF label_else
+    PUSH "c"
+    PRINTC
+    PUSH "a"
+    PRINTC
+    PUSH "t"
+    PRINTC
+    
+# end this statement    
+    BR label_end
+    
+# else write 'dog'
+    label_else
+    PUSH "d"
+    PRINTC
+    PUSH "o"
+    PRINTC
+    PUSH "g"
+    PRINTC
+    
+# end
+    label_end
+    
+5. Everything Else 
+
+a. main program initialization and termination
+
+    A few steps will be done for the main program initialization, while the
+    the termination is done using the machine instruction HALT.
+    
+    # main program initialization
+    # push stack pointer onto stack
+        PUSHMT 
+    
+    # setup display entry from stack, LL = 0 for main program
+        SETD LL
+        
+    # reserve enough storage needed for the scope
+        PUSH UNDEFINED
+        PUSH scope_size_in_word
+        DUPN
+        
+    # main program termination
+        HALT
+
+b. any handling of scopes not described above
+
+    There is no further handling of scopes is needed. The minor scope's storage
+    requirement is already handled when the major scope is initialized. The handling 
+    of major scopes already explained in 1. Storage session.
+
+c. any other information that you think is relevant
+
+    The PUSH operations above can be replaced with any other sequence of operations that result 
+    in an integer, a text constant or a boolean onto the stack where applicable.

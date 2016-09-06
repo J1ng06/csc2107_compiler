@@ -1,0 +1,15 @@
+{
+	var x: integer
+	x := 1
+	write x, newline
+	{
+		var x: integer
+		x := 2
+		write x, newline
+	}
+	{
+		var x: integer
+		x := 3
+		write x, newline
+	}
+}

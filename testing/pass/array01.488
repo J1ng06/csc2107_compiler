@@ -1,0 +1,7 @@
+{   % one D array, integer size
+    var array[3] : integer
+    
+    array[2] := 100
+    
+    write array[2], newline
+}

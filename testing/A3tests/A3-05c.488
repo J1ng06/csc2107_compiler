@@ -1,0 +1,18 @@
+% A3-05c.488   
+% test undeclared identifiers
+  {        var  X   : integer
+  {        var  A    : integer
+  {        var  B    : integer
+  {        var  C    : integer
+  {        var  D    : integer
+  {        var  E    : integer
+  {        var  F    : integer
+  {        var  G    : integer X : = a+c+e+g + D - C
+  {        var  H    : integer
+  {        var  I    : integer
+  {        var  J    : integer
+  {        var  K    : integer
+  {        var  L    : integer
+  {        var  M   : integer  X : = J + a+d+f+i+l+m - K
+  }     }      }      }      }      }      }      }      }      }      }      }      }     
+  }  

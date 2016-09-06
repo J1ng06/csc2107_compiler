@@ -1,0 +1,19 @@
+{   % function with two parameters
+    
+    var flag : boolean
+    
+    function func(num : integer, bool : boolean) : integer
+    {
+        
+        function func2 : integer
+        {
+            return with 100
+        }
+        
+        return with 500
+    }
+    
+    if func(100, true) = 500
+    then write "PASSEP", newline
+    else write "FAILEF", newline
+}

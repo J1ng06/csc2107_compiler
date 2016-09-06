@@ -1,0 +1,12 @@
+{   % one D array, range size
+    var array[-30..100] : integer
+    var num : integer
+    
+    array[-30] := -300
+    array[-20] := -200
+    array[-10] := -100
+    array[50] := 8990
+    array[100] := 1000
+    
+    write array[-30], newline, array[-20], newline, array[-10], newline, array[50], newline, array[100]
+}

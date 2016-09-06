@@ -2,6 +2,9 @@ package compiler488.ast.expn;
 
 import compiler488.ast.ASTList;
 import compiler488.ast.PrettyPrinter;
+import compiler488.symbol.SymbolTable;
+import compiler488.symbol.SymbolType;
+import compiler488.visitor.IVisitor;
 
 /**
  * Represents a function call with arguments.
@@ -13,8 +16,8 @@ public class FunctionCallExpn extends Expn {
 	/** The arguments passed to the function. */
 	private ASTList<Expn> arguments;
 
-	public FunctionCallExpn(String ident, ASTList<Expn> arguments) {
-		super();
+	public FunctionCallExpn(String ident, ASTList<Expn> arguments, int line, int column) {
+		super(line, column);
 
 		this.ident = ident;
 		this.arguments = arguments;
@@ -36,5 +39,18 @@ public class FunctionCallExpn extends Expn {
 			arguments.prettyPrintCommas(p);
 			p.print(")");
 		}
+	}
+	
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
+
+	@Override
+	public SymbolType getExpnType(SymbolTable symbolTable) {
+		if (this.symbolType == SymbolType.UNKNOWN) {
+			this.symbolType = this.getSymbolType(symbolTable, this.ident);
+		}
+		return this.symbolType;
 	}
 }

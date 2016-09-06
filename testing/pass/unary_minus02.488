@@ -1,0 +1,7 @@
+{   % unary minus integer variable
+    var num : integer
+    
+    num := 8
+    
+    write -num, newline
+}

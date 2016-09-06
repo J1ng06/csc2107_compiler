@@ -1,0 +1,88 @@
+Positive tests:
+TODO
+
+Negative tests:
+pr101: no scope program
+pr102: scope with only one bracket
+pr103: scope with 3 brackets
+
+st0101: variable int type, expression bool type
+st0102: use non-declared variable
+st0201: non boolean type expression for if loop
+st0401: non boolean type expression for while loop
+st0501: non boolean type expression for until loop
+st0601: exit without loop
+st0701: exit 0 inside a loop
+st0702: exit 3 inside a double loops
+st0801: non boolean type expression
+st0802: exit when expression without loop
+st1001: return with expression without loop
+st1002: return types do not match
+st1003: nested functions with only one 'return with' (inside inner function)
+st1004: nested functions with only one 'return with' (inside outter function)
+st1101: use return inside a function
+st1401: use procedurename but declared procedurename(parameter)
+st1402: use procedurename(parameter) but declared procedurename
+st1501: number of parameters do not match 
+
+de0101: declare integer, use as boolean
+de0201: function has no return with
+de0301: function(parameter) has no return with
+
+va0201: array with decreasing bound
+va0202: array declared as integer, but use as boolean
+va0301: array with 2D decreasing bound
+
+bo0201: *same test as va0201
+
+ou0101: write output with boolean
+
+in0101: read input with boolean
+
+ar0101: parameter and argument types mismatch
+
+variable0201: array element is boolean
+
+ex0201: negative boolean
+ex0301: boolean addition
+ex0401: boolean subtraction
+ex0501: boolean multiplication
+ex0601: boolean division
+ex0901: not integer
+ex1001: boolean and non-boolean
+ex1101: boolean or non-boolean
+ex1201: boolean = integer
+ex1301: boolean not= integer
+ex1401: boolean < boolean
+ex1501: boolean <= boolean
+ex1601: boolean > boolean
+ex1701: boolean >= boolean
+ex1901: make first expression not boolean
+ex1902: make last two expressions not in the same type
+ex1903: set result type not the same as type of conditional expression
+ex2101: use function but declared function(parameter)
+ex2201: use function(parameter) but declared function
+
+id0001: use non-declared identifier
+id0002: use non-declared identifier in 'return with id'
+id0003: use un-declared ident in function
+id0004: use un-declared ident in procedure
+
+
+sp0001: declare declared variable
+sp0002: declare declared function
+sp0003: declare declared procedure
+sp0004: declare variable with same name as declared function/procedure
+sp0005: declare function/procedure with same name as declared variable
+
+
+
+
+
+
+
+
+
+
+   
+

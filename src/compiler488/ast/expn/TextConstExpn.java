@@ -1,6 +1,9 @@
 package compiler488.ast.expn;
 
 import compiler488.ast.Printable;
+import compiler488.symbol.SymbolTable;
+import compiler488.symbol.SymbolType;
+import compiler488.visitor.IVisitor;
 
 /**
  * Represents a literal text constant.
@@ -9,8 +12,8 @@ public class TextConstExpn extends ConstExpn implements Printable {
 	/** The value of this literal. */
 	private String value;
 
-	public TextConstExpn(String value) {
-		super();
+	public TextConstExpn(String value, int line, int column) {
+		super(line, column);
 
 		this.value = value;
 	}
@@ -26,4 +29,14 @@ public class TextConstExpn extends ConstExpn implements Printable {
 	public String toString() {
 		return "\"" + value + "\"";
 	}
+	
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
+    public SymbolType getExpnType(SymbolTable symbolTableStack) {
+        return SymbolType.TEXT;
+    }
 }

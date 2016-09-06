@@ -1,0 +1,8 @@
+% ex0201: negative boolean
+{ 
+	var bool : boolean
+	var bool2 : boolean
+	var result : integer
+	
+	result := bool * bool2
+}

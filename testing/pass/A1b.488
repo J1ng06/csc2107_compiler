@@ -1,0 +1,29 @@
+% A1b.488 - Authored by all members:
+%
+%         Name      |   CDF
+%    -------------------------
+%    Qi Jian Huang  | c6huangu
+%    Jingnan Chen   | c6chenjl
+%    Faith Magcalas | g3hummus
+%    Steven Low     | g3lowste
+
+{
+    var array1[3] : boolean
+    var array2[1..5] : integer
+    var array3[0..0] : integer
+    var array4[-1..1] : integer
+    var array5[-10..-5] : integer
+    var array6[5, 6] : integer
+    var array7[-1..5, 1..2] : integer
+    var array8[-5..-1, -5..-2] : integer
+    var i : integer
+
+    array1[1] := true
+    array2[2] := 10
+    array3[0] := array2[2] * 2
+    array4[-1] := 5
+    array5[-10] := 6
+    array6[4, 5] := array4[-1] + array5[-10]
+    array7[-1, 2] := array3[0] / 2
+    array8[-5, -5] := 2 
+}

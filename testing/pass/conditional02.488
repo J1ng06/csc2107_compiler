@@ -1,0 +1,13 @@
+{   % conditional (variable)
+    
+    var num : integer
+    var bool : boolean
+    
+    bool := true
+    num := ((bool) ? 5 : 10)
+    write num, newline
+    
+    bool := false
+    num := ((bool) ? 5 : 10)
+    write num, newline
+}

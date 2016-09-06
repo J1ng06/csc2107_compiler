@@ -1,0 +1,62 @@
+% A1c.488 - Authored by all members:
+%
+%         Name      |   CDF
+%    -------------------------
+%    Qi Jian Huang  | c6huangu
+%    Jingnan Chen   | c6chenjl
+%    Faith Magcalas | g3hummus
+%    Steven Low     | g3lowste
+
+{    
+    % declaration
+    var num1 : integer
+    var num2 : integer
+    
+    % statements
+    num1 := 1
+    num2 := 10
+     
+    % while-do loop
+    while num1 < num2
+    do num1 := num1 + 1
+    
+    % repeat-until loop
+    repeat num1 := num1 + 1
+    until num1 > num2
+    
+    % while-do loop, and use exit 1
+    while true
+    do {
+        num1 := num1 + 1
+        if num1 > num2
+        then exit
+    }
+    
+    % 2 while-do loops, and use exit 2
+    while true
+    do {
+        num1 := num1 + 2
+        while true 
+        do {
+            num2 := num2 + 1
+            if num2 > 100
+            then exit 2
+        }
+    }
+
+    % exit-when statement
+    while true
+    do {
+        exit when true
+    }
+    
+    % 2 while-do loops, and use exit-integer-when-expression statement
+    while true
+    do {
+        num1 := num1 + 2
+        while true
+        do {
+            exit 2 when true
+        }
+    }
+}

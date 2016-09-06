@@ -1,0 +1,14 @@
+{   % while do
+    
+    var num : integer
+    
+    num := 8
+    
+    while num not = 0
+    do 
+        num := num - 1
+        
+    if num = 0
+    then write "pass", newline
+    else write "fail", newline
+}

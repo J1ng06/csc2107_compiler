@@ -1,0 +1,8 @@
+{
+    var bool : boolean
+
+    % Full precedence test
+    % (Expect: UMINUS, TIMES, PLUS, UMINUS, DIVIDE, MINUS,
+    % LESS EQUAL, NOT, AND, OR)
+    bool := true or true and not -10 + 12 * 2 <= -3 - 5 / 4
+}

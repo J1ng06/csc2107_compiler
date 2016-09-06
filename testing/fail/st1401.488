@@ -1,0 +1,10 @@
+% st1401: use procedurename but declared procedurename(parameter)
+{ 
+    procedure decrease(num : integer) {
+    	write "apple pie"
+	}
+	
+	if true
+	then
+		decrease
+}

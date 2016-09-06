@@ -1,0 +1,8 @@
+{   % if statement with true constant
+    var num : integer
+    
+    num := 8
+    
+    if true
+    then write num, newline
+}

@@ -22,8 +22,8 @@ public abstract class UnaryExpn extends Expn {
 	 */
 	private String opSymbol;
 
-	public UnaryExpn(String opSymbol, Expn operand) {
-		super();
+	public UnaryExpn(String opSymbol, Expn operand, int line, int column) {
+		super(line, column);
 
 		this.opSymbol = opSymbol;
 		this.operand = operand;

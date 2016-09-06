@@ -1,0 +1,17 @@
+% A3-07d.488   ===========================================
+% test correct uses of exit 
+  {  
+    var p, q  : boolean
+    var i  : integer
+    while p and  q do
+        while  not p or  not q  do
+            while i  not  = 3 do
+                 while i = 3 do   {  
+                      exit  when p or  q
+                      exit 
+		      if q then
+                         exit  when i > 7
+                      else
+                         exit  when i < 7
+		       } 
+  }  

@@ -1,0 +1,11 @@
+% de0201: function has no return with
+{ 
+	var num : integer
+	
+  function decrease : boolean {
+    if (true) then
+      num := 2
+  }
+	 
+	num := 5
+}

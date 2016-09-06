@@ -1,0 +1,16 @@
+{   % exit when true
+    
+    var num : integer
+    
+    num := 10
+    
+    repeat
+    {
+        num := num * 2
+
+        exit when num = 80
+        
+    } until num > 100
+    
+    write "Expected 80 ", "But got ", num, newline 
+}

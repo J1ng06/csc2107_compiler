@@ -1,0 +1,31 @@
+{
+    var bool : boolean
+
+    % AND reduced before OR
+    bool := true or true and true
+    bool := true and true or true
+    
+    if bool
+    then write "passed", newline
+    else write "failed", newline
+
+    % NOT reduced before AND/OR
+    bool := true and not false
+    bool := true or not false
+    
+    if bool
+    then write "passed", newline
+    else write "failed", newline
+
+    % comparators reduced before AND/OR/NOT
+    % (expect: EQUAL, NOT, AND, NOT EQUAL, OR)
+    bool := true and not 3 = 3 or 3 not= 4
+    % (expect: LESS, LESS EQUAL, NOT, GREATER, AND, OR)
+    bool := 3 < 4 or not 3 <= 4 and 4 > 3
+    % (expect: GREATER EQUAL, AND)
+    bool := true and 4 >= 5
+    
+    if bool
+    then write "failed", newline
+    else write "passed", newline
+}

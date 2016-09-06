@@ -1,0 +1,356 @@
+% Assignment 4 Sample Program 3                % 3-1
+ {                             % 3-2
+   var a, b, c, d : integer                % 3-3
+   var p, q, r, s : boolean                % 3-4
+   procedure P                         % 3-5
+       {                         % 3-6
+         var e, f : integer                % 3-7
+         if p then  return                    % 3-8
+         e : = a                     % 3-9
+     return                        % 3-10
+       }   % P                        % 3-11
+  function F( m : integer , n : boolean ) : integer    % 3-12
+       {                         % 3-13
+         if n then  return with m + b              % 3-14
+         else  return with c - m                  % 3-15
+       }   % F                        % 3-16
+  procedure Q( m : boolean , n : integer, p : boolean )    % 3-17
+     {                             % 3-18
+      var t, u, v : integer                % 3-19
+      function G : boolean                % 3-20
+           {                         % 3-21
+             var w, x : integer                % 3-22
+             return with                 % 3-23
+              (m and not p ? v < u : not r and s )    % 3-24
+           }   % G                    % 3-25
+      write F( t - n + a  ,  not  G  or  r ) , newline     % 3-26
+   }   %Q                        % 3-27
+  Q(  not  p  or  q , F(F( b, p ),not q ) ,        % 3-28
+      ( not r or not s ? true : s not= q ) )        % 3-29
+ }                             % 3-30
+
+% translation
+% 3-2
+    PUSHMT
+    SETD 0 
+    
+% 3-3
+    PUSH UNDEFINED
+    PUSH 4
+    DUPN 
+    
+% 3-4
+    PUSH UNDEFINED
+    PUSH 4
+    DUPN
+    
+% 3-5
+    PUSH label_main_prog % skip procedure P setup
+    BR
+    
+label_proc_P: % address of procedure P
+
+%3-6
+    PUSHMT
+    SETD 1
+    
+%3-7
+    PUSH UNDEFINED
+    PUSH 2
+    DUPN
+    
+%3-8
+    ADDR 0 4 % p
+    LOAD
+    PUSH label_P_if_end
+    BF
+    PUSH label_proc_P_end
+    BR
+    
+label_P_if_end:
+
+%3-9
+    ADDR 1 0 % e
+    ADDR 0 0 % a
+    LOAD
+    STORE
+       
+label_proc_P_end:
+
+%3-11
+    PUSH 2
+    POPN
+    SETD 1
+%3-12   
+    
+    BR % branch back next instruction in the main program
+    
+label_func_F:
+    
+%3－13
+    PUSHMT
+    SETD 1
+    
+%3-14
+    ADDR 1 -2 %n
+    LOAD
+    PUSH label_func_F_if_else
+    BF
+    ADDR 0 1 %b
+    LOAD
+    ADDR 1 -3 %m
+    LOAD
+    ADD % m + b
+    
+    ADDR 1 -4    % Storing return value
+    SWAP
+    STORE
+    PUSH label_func_F_end
+    BR % return with m + b 
+    
+label_func_F_if_else:
+
+%3-15
+    ADDR 0 2 %c
+    LOAD
+    ADDR 1 -3 %m
+    LOAD
+    SUB
+    ADDR 1 -4
+    SWAP
+    STORE
+    PUSH label_func_F_end
+    BR %return with c - m
+    
+label_func_F_end:
+        
+%3-16    
+    SETD 1
+%3-17
+    BR % branch back next instruction in the main program
+    
+label_proc_Q:
+
+%3-18
+    PUSHMT
+    SETD 1
+    
+%3-19
+    PUSH UNDEFINED
+    PUSH 3
+    DUPN
+    
+%3-20
+    PUSH label_Q_main_body
+    BR
+    
+label_func_G:
+
+%3-21
+    PUSHMT
+    SETD 2
+    
+%3-22
+    PUSH UNDEFINED
+    PUSH 2
+    DUPN
+    
+%3-24
+    ADDR 2 -4 %m
+    LOAD
+    PUSH label_func_G_cond_false
+    BF
+    ADDR 0 4 %p
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ
+    PUSH label_func_G_cond_false
+    BF
+    ADDR 2 2 %v
+    ADDR 2 1 %u
+    LT
+    PUSH label_func_G_end
+    BR % return with v < u
+    
+label_func_G_cond_false:
+
+    ADDR 0 6 %r
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ
+    PUSH label_func_G_cond_not_r_false
+    BF
+    ADDR 0 7 %s
+    LOAD
+    PUSH label_func_G_cond_s_false
+    BF
+    PUSH MACHINE_TRUE
+    PUSH label_func_G_end
+    BR
+    
+label_func_G_cond_not_r_false:
+
+    PUSH MACHINE_FALSE
+    PUSH label_func_G_end
+    BR
+    
+label_func_G_cond_s_false:
+
+    PUSH MACHINE_FALSE
+    PUSH label_func_G_end
+    BR
+%3-25 
+label_G_end:
+    PUSH 2
+    POPN
+    SETD 2
+    BR
+
+%3-26
+label_Q_main_body:
+    PUSH UNDERFINED %return value for F
+    
+    ADDR 1 0 %t
+    LOAD
+    ADDR 1 -3 %n
+    LOAD
+    SUB %t - n
+    
+    ADDR 0 0 %a
+    ADD %t - n + a
+    
+    PUSH UNDEFINED 
+    PUSH <Ret_Address4>    
+    PUSH label_func_G
+    BR
+    
+    PUSH MACHINE_FALSE
+    EQ % not G
+    ADDR 0 6 %r
+    LOAD
+    OR
+    PUSH <Ret_Address5>
+    PUSH label_func_F
+    BR
+    
+    PUSH 2 % pop 2 parameters
+    POPN
+    
+    PRINTI
+    SETD 1
+    
+    BR % branch back to the end of the main program
+
+
+
+    
+    
+##########################################
+
+label_main_prog:
+% 3-28
+    % Q 
+    % first parameter: !p | q
+    ADDR 0 4
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ
+    % (not p) = false
+    PUSH Label1
+    BF
+    % (not p) = true short-circuited
+    PUSH MACHINE_TRUE
+    PUSH Label2
+Label1: % not p = false
+    ADDR 0 5
+    LOAD
+    % second parameter F(F(b, p), !q)
+Label2: 
+    PUSH UNDEFINED  % for return value of outer F
+    PUSH UNDEFINED     % for return value of inner F
+    ADDR 0 1    %b
+    LOAD
+    ADDR 0 4    %q
+    LOAD
+    PUSH <Ret_Address1>  % return address of inner F
+    PUSH label_func_F
+    BR
+    % after inner F is called, pop b, q
+    PUSH 2    
+    POPN
+    
+    ADDR 0 5
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ            % not q
+    
+    PUSH <Ret_Address2>        % return address of outer F
+    PUSH label_func_F
+    BR
+    
+    % after outer F is called, pop F(b,q), not q
+    PUSH 2    
+    POPN
+%3-29
+    ADDR 0 6    % r
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ
+    PUSH label_main_cond_not_r_false
+    BF
+    % r = true
+    PUSH MACHINE_TRUE
+    PUSH label_Q_para_ready
+    BR
+    
+label_main_cond_not_r_false: 
+    ADDR 0 7    %s
+    LOAD
+    PUSH MACHINE_FALSE
+    EQ
+    PUSH label_main_cond_not_s_false
+    BF
+    % s = true
+    PUSH MACHINE_TRUE
+    PUSH label_Q_para_ready
+    BR
+    
+label_main_cond_not_s_false:
+    ADDR 0 7
+    LOAD
+    ADDR 0 5
+    LOAD
+    % s not= q
+    EQ
+    PUSH MACHINE_FALSE
+    EQ
+    
+label_Q_para_ready:
+    PUSH <Ret_Address3>
+    PUSH label_proc_Q
+    BR
+    % after Q is called, pop 3 parameters
+    PUSH 3
+    POPN
+    
+    SETD 0
+	PUSH 8
+	POPN
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

@@ -1,0 +1,8 @@
+% ex1701: boolean >= boolean
+{ 
+	var num : integer
+	
+	if (true >= false)
+	then
+		exit
+}

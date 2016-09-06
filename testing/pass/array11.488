@@ -1,0 +1,16 @@
+{
+    var arr1[10] : integer
+    function f (num : integer ) : integer{
+        var i : integer
+        i : = 1
+        while (i < 11) do{
+            arr1[i] := num
+            i := i + 1
+        }
+        return with i
+    }
+    
+    if f(10) = 11
+    then write "passed", newline
+    else write "failed", newline
+}

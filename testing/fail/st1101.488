@@ -1,0 +1,10 @@
+% st1101: use return inside a function
+{
+  	var num : integer
+  
+  	function fact : integer {
+		return
+	}
+	
+	num := 2	
+}

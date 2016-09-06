@@ -1,0 +1,9 @@
+{   % not expression with boolean variable
+    var bool : boolean
+    
+    bool := false
+
+    if (not bool)
+    then write 5, newline
+    else write 58, newline
+}

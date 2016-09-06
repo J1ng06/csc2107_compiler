@@ -1,0 +1,19 @@
+Similarly to assignment 1, we decided to work together to complete the grammer
+rather than split up the work.  In our initial meeting we added grammer rules
+directly from the course language sheet as a starting point to work from. We 
+continued to meet about 3 times per week for a few hours where we tackeled
+shift-reduce and reduce-reduce problems as they arose through JCup warnings.
+There were a few items that did end up getting split up slightly, specifically,
+Faith and Steven handled precedence of expressions, while Jing and Jian 
+handled conflicts that were arising from productions such as:
+
+    statement -> statement statement.
+
+Otherwise, The files should be considered as authored by all four of us:
+
+         Name      |   CDF
+    -------------------------
+    Qi Jian Huang  | c6huangu
+    Jingnan Chen   | c6chenjl
+    Faith Magcalas | g3hummus
+    Steven Low     | g3lowste

@@ -1,0 +1,8 @@
+% ex1902: make last two expressions not in the same type
+{ 
+	var num : integer
+	
+	if (true ? 3 : false)
+	then
+		exit
+}

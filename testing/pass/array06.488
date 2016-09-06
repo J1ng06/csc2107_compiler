@@ -1,0 +1,9 @@
+{   % one D array with arithmetic operation
+    var array[-3..5] : integer
+    var num : integer
+    
+    num := -2
+    array[num + 5] := 800
+    
+    write array[num + 5], newline
+}

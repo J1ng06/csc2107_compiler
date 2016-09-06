@@ -1,5 +1,10 @@
 package compiler488.ast.expn;
 
+import compiler488.ast.PrettyPrinter;
+import compiler488.symbol.SymbolTable;
+import compiler488.symbol.SymbolType;
+import compiler488.visitor.IVisitor;
+
 /** Represents a conditional expression (i.e., x>0?3:4). */
 public class ConditionalExpn extends Expn {
 	private Expn condition; // Evaluate this to decide which value to yield.
@@ -8,6 +13,12 @@ public class ConditionalExpn extends Expn {
 
 	private Expn falseValue; // Otherwise, the value is this.
 
+	public ConditionalExpn (Expn cond, Expn ifTrue, Expn ifFalse, int line, int column) {
+		super(line, column);
+		condition = cond;
+		trueValue = ifTrue;
+		falseValue = ifFalse;
+	}
 	/** Returns a string that describes the conditional expression. */
 	@Override
 	public String toString() {
@@ -36,5 +47,30 @@ public class ConditionalExpn extends Expn {
 
 	public void setTrueValue(Expn trueValue) {
 		this.trueValue = trueValue;
+	}
+	
+	@Override
+    public void prettyPrint(PrettyPrinter p) {
+        p.print("(");
+        condition.prettyPrint(p);
+        p.print(")");
+        p.print(" ? " + trueValue + " : " + falseValue + ")");
+    }
+	
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
+
+	@Override
+	public SymbolType getExpnType(SymbolTable symbolTable) {
+		if (this.symbolType == SymbolType.UNKNOWN){
+			if (this.trueValue.getExpnType(symbolTable) == this.falseValue.getExpnType(symbolTable)){
+				this.symbolType = this.trueValue.getExpnType(symbolTable);
+			}else {
+				this.symbolType = SymbolType.UNKNOWN;
+			}
+		}
+		return this.symbolType;
 	}
 }

@@ -1,0 +1,8 @@
+% ex1401: boolean < boolean
+{ 
+	var num : integer
+	
+	if (true < false)
+	then
+		exit
+}

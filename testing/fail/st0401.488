@@ -1,0 +1,7 @@
+%st0401: non boolean type expression for while loop
+{
+  var num : integer
+  while 1 
+  do
+    num := 2
+}

@@ -1,0 +1,16 @@
+% sp0006: use declared function
+{ 
+	var num : integer
+	
+	var increase : boolean
+	var decrease : boolean
+
+	function decrease(num : integer, bool : boolean) : boolean {
+    	write "apple pie"
+    	return with true
+	}
+	
+	increase := decrease(3, 4)
+	
+	num := 5
+}

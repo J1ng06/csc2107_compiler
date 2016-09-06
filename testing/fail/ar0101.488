@@ -1,0 +1,12 @@
+% ar0101: parameter and argument types mismatch
+{ 
+	var num : integer
+	
+    procedure decrease(num : integer) {
+    	write "apple pie"
+	}
+	
+	if true
+	then
+		decrease(true)
+}

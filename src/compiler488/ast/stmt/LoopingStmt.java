@@ -13,15 +13,15 @@ public abstract class LoopingStmt extends Stmt {
 	/** The body of the looping construct. */
 	protected ASTList<Stmt> body;
 
-	public LoopingStmt(Expn expn, ASTList<Stmt> body) {
-		super();
+	public LoopingStmt(Expn expn, ASTList<Stmt> body, int line, int column) {
+		super(line, column);
 
 		this.expn = expn;
 		this.body = body;
 	}
 
-	public LoopingStmt(ASTList<Stmt> body) {
-		this(null, body);
+	public LoopingStmt(ASTList<Stmt> body, int line, int column) {
+		this(null, body, line, column);
 	}
 
 	public Expn getExpn() {

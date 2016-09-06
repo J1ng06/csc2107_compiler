@@ -1,0 +1,165 @@
+testing/pass - These are new tests.
+
+BASIC TESTS
+empty:					empty scope
+hello:					write statement
+readStmt:				read statement
+
+ARRAYS
+array01:				1D integer array initialized with integer size
+array02:				1D integer array initialized with a range
+array03:				Indexing a 2D integer array with constants
+array04:				Indexing a 1D integer array with a variable
+array05:				Indexing a 2D integer array with a variable
+array06:				Indexing a 1D integer array with an arithmetic expression
+array07:				Indexing a 2D integer array with an arithmetic expression
+array08:				1D boolean array
+array09:				Setting a 1D array element with an arithmetic expression
+array10:				Setting a 2D array element with an arithmetic expression
+array11:                Arrays with function call
+array12:                Arrays with procedure call
+
+ARITHMETIC OPERATORS
+unary_minus01:			unary - operator with a constant
+unary_minus02:			unary - operator with a variable
+unary_minus03:			unary - operator applied to a variable twice
+scalar03:				+ operator with variables
+
+BOOLEAN OPERATORS
+boolean_and01:			and operator with constants
+boolean_and02:			and operator with variables
+boolean_or01:			or operator with constants
+boolean_or02:			or operator with variables
+not_expn01:				not operator with a constant
+not_expn02:				not operator with a variable
+
+COMPARISON OPERATORS
+compare_equal01:		= operator with constants
+compare_equal02:		= operator with variables
+compare_not_equal01:	not= operator with constants
+compare_not_equal02:	not= operator with variables	
+compare_greater_than01:	>= operator with constants
+compare_greater_than02:	>= operator with variables
+compare_greater01:		> operator with constants
+compare_greater02:		> operator with variables
+compare_less_than01:	<= operator with constants
+compare_less_than02:	<= operator with variables
+compare_less01:			< operator with constants
+compare_less02:			< operator with variables
+
+CONDITIONAL EXPRESSIONS
+conditional01:			Conditional expressions with constants
+conditional02:			Conditional expressions with variables
+
+LOOPS
+repeat_until01:			Repeat loop with expression for exit condition
+repeat_until02:			Repeat loop with variable for exit condition
+while_do01:				While loop with expression for exit condition
+while_do02:				While loop with expression for exit condition and write statment inside
+
+EXIT STATEMENTS
+exit01:					Exit statement with integer in while loops
+exit02:					Exit statement in while loop
+exit03:					Exit statement in repeat loop
+exit04:					Exit statement with integer in repeat loops
+exit05:					Exit statement with condition in repeat loop that will trigger early exit
+exit06:					Exit statement with condition in repeat loop that will not cause early exit 
+exit07:					Exit statement with condition in while loop that will trigger early exit
+
+IF STATEMENTS
+if_stmt01:			If statement with true for condition
+if_stmt02:			If statement with false for condition
+if_stmt03:			If statements with else clauses
+if_stmt04:			If statements with variables for condition
+
+PROCEDURES
+procedure01:		Procedure that takes no params and produces no output
+procedure02:		Procedure that takes no params and produces output
+procedure03:		Procedure that takes no params and produces output whose effects are overwritten
+procedure04:		Procedure that takes parameters
+procedure05:		Procedure with a nested procedure that takes no params
+procedure06:		Procedure wtih a nested procedure that takes params
+procedure07:		Recursive procedure
+
+FUNCTIONS
+function01:			Function that takes no parameters
+function02:			Function that takes one parameter
+function03:			Function that takes two parameters
+function04:			Function with if statements
+function05:			Function with nested function definition
+function06:			Function with nested function call
+function07:			Function with nested function call that takes a parameter
+
+testing/fail - These tests are taken from A3.
+
+pr101: no scope program
+pr102: scope with only one bracket
+pr103: scope with 3 brackets
+
+st0101: variable int type, expression bool type
+st0102: use non-declared variable
+st0201: non boolean type expression for if loop
+st0401: non boolean type expression for while loop
+st0501: non boolean type expression for until loop
+st0601: exit without loop
+st0701: exit 0 inside a loop
+st0702: exit 3 inside a double loops
+st0801: non boolean type expression
+st0802: exit when expression without loop
+st1001: return with expression without loop
+st1002: return types do not match
+st1003: nested functions with only one 'return with' (inside inner function)
+st1004: nested functions with only one 'return with' (inside outter function)
+st1101: use return inside a function
+st1401: use procedurename but declared procedurename(parameter)
+st1402: use procedurename(parameter) but declared procedurename
+st1501: number of parameters do not match 
+
+de0101: declare integer, use as boolean
+de0201: function has no return with
+de0301: function(parameter) has no return with
+
+va0201: array with decreasing bound
+va0202: array declared as integer, but use as boolean
+va0301: array with 2D decreasing bound
+
+bo0201: *same test as va0201
+
+ou0101: write output with boolean
+
+in0101: read input with boolean
+
+ar0101: parameter and argument types mismatch
+
+variable0201: array element is boolean
+
+ex0201: negative boolean
+ex0301: boolean addition
+ex0401: boolean subtraction
+ex0501: boolean multiplication
+ex0601: boolean division
+ex0901: not integer
+ex1001: boolean and non-boolean
+ex1101: boolean or non-boolean
+ex1201: boolean = integer
+ex1301: boolean not= integer
+ex1401: boolean < boolean
+ex1501: boolean <= boolean
+ex1601: boolean > boolean
+ex1701: boolean >= boolean
+ex1901: make first expression not boolean
+ex1902: make last two expressions not in the same type
+ex1903: set result type not the same as type of conditional expression
+ex2101: use function but declared function(parameter)
+ex2201: use function(parameter) but declared function
+
+id0001: use non-declared identifier
+id0002: use non-declared identifier in 'return with id'
+id0003: use un-declared ident in function
+id0004: use un-declared ident in procedure
+
+sp0001: declare declared variable
+sp0002: declare declared function
+sp0003: declare declared procedure
+sp0004: declare variable with same name as declared function/procedure
+sp0005: declare function/procedure with same name as declared variable

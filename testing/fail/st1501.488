@@ -1,0 +1,15 @@
+% st1501: number of parameters do not match 
+{ 
+	var num : integer
+	
+  	% recursive procesure with parameter
+    procedure decrease(num : integer, bool : boolean) {
+    	write "apple pie"
+	}
+	
+	num := 5
+	
+	if true
+	then
+		decrease(num)
+}

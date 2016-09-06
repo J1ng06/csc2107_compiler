@@ -1,0 +1,20 @@
+% A3-07b.488   ===========================================
+% test statement checks
+  {  
+    var i  : integer
+    function F  : integer {    return    }  
+    procedure G    {     return with 6    }  
+    function P ( i : integer ) : integer { 
+ 	var p, q, r : boolean
+        return with  p  and  q  or   r 
+     }  % P
+    function Q( i : integer) : boolean { 
+        return with  i + 7 
+        return with  P( 7 ) 
+     } 
+    var t : boolean 
+    G 
+    i : = F
+    i : = P( 4 )
+    t : = Q( 5 )
+  } 

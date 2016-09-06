@@ -1,0 +1,7 @@
+%st0501: non boolean type expression for until loop
+{
+  var num : integer
+  repeat num := 2
+  until 
+  	1
+}

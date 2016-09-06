@@ -1,0 +1,16 @@
+{   % boolean or (variable)
+
+    var bool : boolean
+    var bool2 : boolean
+    
+    bool := true
+    bool2 := false
+    
+    if bool or bool2
+    then write "passed", newline
+    else write "failed", newline
+    
+    if false or bool2
+    then write "failed", newline
+    else write "passed", newline
+}

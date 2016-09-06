@@ -1,0 +1,8 @@
+% ex0301: boolean addition
+{ 
+	var bool : boolean
+	var bool2 : boolean
+	var result : integer
+	
+	result := bool + bool2 + true * true
+}

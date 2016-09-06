@@ -1,0 +1,28 @@
+{   % procedure with parameters
+    
+    var num : integer
+    var flag : boolean
+    
+    procedure proce(bool : boolean, count : integer)
+    {
+        var offset : integer 
+        
+        num := 5000
+        offset := 2000 - num
+        
+        num := num + offset
+        
+        if bool = true
+        then write "TRUE", newline
+        else write "FALSE", newline
+        
+        write count, newline
+    }
+    
+    flag := true
+    num := 100
+    
+    proce(flag, num)
+    
+    write "Expected 2000 ", "but got ", num, newline
+}

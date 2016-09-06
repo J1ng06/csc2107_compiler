@@ -1,0 +1,6 @@
+% ex1903: set result type not the same as type of conditional expression
+{ 
+	var num : integer
+	
+	num := (true ? true : false)
+}

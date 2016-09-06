@@ -1,0 +1,32 @@
+% Tests of arithmetic precedence.
+{
+    var num : integer
+    
+    % UMINUS checks
+    num := -2
+    num := 3 + -2
+    num := -2 * 3 * -2
+    
+    write num, newline
+
+    % TIMES reduced before PLUS/MINUS
+    num := 2 + 3 * 4
+    num := 2 * 3 + 4
+    num := 2 - 3 * 4
+    num := 2 * 3 - 4
+    
+    write num, newline
+
+    % DIVIDE reduced before PLUS/MINUS
+    num := 2 + 3 / 4
+    num := 2 / 3 + 4
+    num := 2 - 3 / 4
+    num := 2 / 2 - 4
+    
+    write num, newline
+    
+    % PLUS TIMES DIVIDE MINUS - i.e. (2 + 3) - ((4 * 5) / 6)
+    num := 2 + 3 - 4 * 5 / 5
+    
+    write num, newline
+}

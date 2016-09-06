@@ -1,0 +1,9 @@
+{   % one D with boolean 
+    var array[5] : boolean
+    
+    array[3] := true
+    
+    if array[3]
+    then write 1
+    else write 5
+}

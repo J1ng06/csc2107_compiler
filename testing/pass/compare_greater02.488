@@ -1,0 +1,16 @@
+{   %comparator GREATER (variable)
+
+    var num : integer
+    var num2 : integer
+    
+    num := 5
+    num2 := 6
+    
+    if num2 > num
+    then write "passed", newline
+    else write "failed", newline
+    
+    if num > num2
+    then write "failed", newline
+    else write "passed", newline
+}

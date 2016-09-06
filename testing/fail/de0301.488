@@ -1,0 +1,10 @@
+% de0301: function(parameter) has no return with
+{ 
+	var num : integer
+	
+    function decrease(num : integer, bool : boolean) : boolean {
+    	write "apple pie"
+	}
+	
+	num := 5
+}

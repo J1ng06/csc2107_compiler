@@ -1,0 +1,11 @@
+% ex2101: use function but declared function(parameter)
+{ 
+	function decrease(num : integer) : boolean {
+    	write "apple pie"
+    	return with true
+	}
+	
+	if true
+	then
+		decrease
+}

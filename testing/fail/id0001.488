@@ -1,0 +1,10 @@
+% id0001: use un-declared ident
+{ 
+	var num : boolean
+	
+	num2 := true
+	
+	if (num3 = true)
+	then
+		exit
+}

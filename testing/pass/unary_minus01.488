@@ -1,0 +1,3 @@
+{   % unary minus integer constant
+    write -89, newline
+}

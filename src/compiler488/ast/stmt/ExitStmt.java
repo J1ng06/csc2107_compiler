@@ -1,6 +1,8 @@
 package compiler488.ast.stmt;
 
-import compiler488.ast.expn.*;
+import compiler488.ast.ASTList;
+import compiler488.ast.expn.Expn;
+import compiler488.visitor.IVisitor;
 
 /**
  * Represents the command to exit from a loop.
@@ -12,6 +14,11 @@ public class ExitStmt extends Stmt {
 	/** Number of levels to exit. */
 	private Integer level = -1;
 
+	public ExitStmt(Expn cond, Integer level, int line, int column){
+		super(line, column);
+		expn = cond;
+		this.level = level;
+	}
 	/**
 	 * Returns the string <b>"exit"</b> or <b>"exit when e"</b>" or
 	 * <b>"exit"</b> level or <b>"exit"</b> level when e
@@ -46,4 +53,13 @@ public class ExitStmt extends Stmt {
 	public void setLevel(Integer level) {
 		this.level = level;
 	}
+	
+	@Override
+    public void accept(IVisitor visitor) {
+        visitor.visit(this);
+    }
+    @Override
+    public ASTList<ReturnStmt> findReturnStmts(String type) {
+        return new ASTList<>();
+    }
 }
